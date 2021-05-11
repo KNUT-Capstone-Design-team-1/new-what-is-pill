@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
+import * as GuideLine from './GuideLine'
 import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, Alert, ToastAndroid} from 'react-native'
-
 
 export default class Check_Pic extends React.Component{
   Send_img(){
@@ -14,6 +14,7 @@ export default class Check_Pic extends React.Component{
   // 어떤 종류의 검색 실패든 화면을 GuideLine으로 전환
   // 검색 성공시에는 Information_Pill로 전환
   }
+
   render(){
     const {navigation} = this.props;
     return(
@@ -22,16 +23,16 @@ export default class Check_Pic extends React.Component{
         <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>사진 확인</Text>
       </SafeAreaView>
       <SafeAreaView style={styles.photo_container}>
-        <Image style={{height:'70%',width:'100%',resizeMode:'contain'}} source={require('../image/example.jpg')}/>
+        <Image style={{height:'70%',width:'100%',resizeMode:'contain'}} source={{uri:img_temp}}/>
       </SafeAreaView>
       <SafeAreaView style={styles.btn_container}>
         <TouchableOpacity style={styles.btn_st1} onPress={()=>this.Send_img()}>
           <Text style={styles.txt_st}>검색</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
+        <TouchableOpacity style={styles.btn_st2} onPress={()=>GuideLine.camera(this.props)}>
           <Text style={styles.txt_st}>재촬영</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
+        <TouchableOpacity style={styles.btn_st2} onPress={()=>GuideLine.gallery(this.props)}>
           <Text style={styles.txt_st}>갤러리</Text>
         </TouchableOpacity>
       </SafeAreaView>

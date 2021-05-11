@@ -1,18 +1,61 @@
 import * as React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
+import {launchCamera, launchImageLibrary, ImagePicker} from 'react-native-image-picker'
+import {SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} from 'react-native'
+global.img_temp = 'https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'
+
+export function camera(props){
+  const options={
+    mediaType:'photo',
+    cameraType:'front',
+    saveToPhotos:true,
+  };
+  const {navigation} = props
+  try {launchCamera(options, (uri)=>{
+    img_temp = uri.uri
+    navigation.replace('Check_Pic')
+    })}
+  catch(e){
+    if (e=='camera_unavailable'){ToastAndroid.showWithGravity('카메라를 사용할 수 없습니다',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
+    else if (e=='permission'){ToastAndroid.showWithGravity('앱의 카메라 권한을 허용해주세요.',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
+    else {ToastAndroid.showWithGravity(`오류코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.BOTTOM)}
+  }
+}
+
+export function gallery(props){
+  const options={
+    mediaType:'photo',
+    quality:1,
+  };
+  const {navigation} = props
+  try {launchImageLibrary(options, (uri)=>{
+    img_temp = uri.uri
+    navigation.replace('Check_Pic')
+  });}
+  catch(e){
+    if (e=='permission'){ToastAndroid.showWithGravity('앱의 권한을 허용해주세요.',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
+    else {ToastAndroid.showWithGravity(`오류코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.BOTTOM)}
+  }
+}
+
 
 export default class GuideLine extends React.Component{
+  constructor(props){
+    super(props)
+    img_temp='https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'
+    this.state = {image:img_temp,}
+  }
+  
   render(){
-    const {navigation} = this.props;
+    const {navigation} = this.props
     return(
     <SafeAreaView style={{flex:1}}>
       <SafeAreaView style={styles.header}>
         <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>촬영 가이드 라인</Text>
       </SafeAreaView>
       <SafeAreaView style={styles.image_container}>
-        <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={require('../image/example.jpg')}/>
+        <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={{uri:this.state.image}}/>
       </SafeAreaView>
       <SafeAreaView style={styles.text_container}>
         <Text style={styles.first_txt}>
@@ -23,10 +66,10 @@ export default class GuideLine extends React.Component{
         3. 색상이 잘보이게 찍는다</Text>
       </SafeAreaView>
       <SafeAreaView style={styles.btn_container}>
-        <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Check_Pic')}>
-          <Text style={styles.btn_txt}>촬영</Text>
+        <TouchableOpacity style={styles.btn_st} onPress={()=>camera(this.props)}>
+          <Text style={styles.btn_txt}>카메라</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Check_Pic')}>
+        <TouchableOpacity style={styles.btn_st} onPress={()=>gallery(this.props)}>
           <Text style={styles.btn_txt}>갤러리</Text>
         </TouchableOpacity>
       </SafeAreaView>
