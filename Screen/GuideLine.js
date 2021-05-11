@@ -14,7 +14,8 @@ export function camera(props){
   const {navigation} = props
   try {launchCamera(options, (uri)=>{
     img_temp = uri.uri
-    navigation.replace('Check_Pic')
+    if (uri.uri!=null){
+      navigation.replace('Check_Pic')}
     })}
   catch(e){
     if (e=='camera_unavailable'){ToastAndroid.showWithGravity('카메라를 사용할 수 없습니다',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
@@ -31,7 +32,8 @@ export function gallery(props){
   const {navigation} = props
   try {launchImageLibrary(options, (uri)=>{
     img_temp = uri.uri
-    navigation.replace('Check_Pic')
+    if (uri.uri!=null){
+      navigation.replace('Check_Pic')}
   });}
   catch(e){
     if (e=='permission'){ToastAndroid.showWithGravity('앱의 권한을 허용해주세요.',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
