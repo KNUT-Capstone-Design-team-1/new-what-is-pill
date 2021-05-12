@@ -6,10 +6,10 @@ import {PERMISSIONS, RESULTS, request} from 'react-native-permissions'
 import {ToastAndroid, PermissionsAndroid} from 'react-native'
 import Main from './Screen/Main'
 import Check_Pic from './Screen/Check_Pic'
-import GuideLine from './Screen/GuideLine'
+import Search_Pill from './Screen/Search_Pill'
 import Information_Pill from './Screen/Information_Pill'
 import Manage_Pill from './Screen/Manage_Pill'
-import Pharm_Search from './Screen/Pharm_Search'
+import Nearby_Pharmacies from './Screen/Nearby_Pharmacies'
 
 const Stack = createStackNavigator();
 
@@ -33,10 +33,10 @@ export default function App(){
         <Stack.Navigator initialRouteName='Main'>
           <Stack.Screen name='Main' component={Main} options={{headerShown: false}}/>
           <Stack.Screen name='Check_Pic' component={Check_Pic} options={{headerShown: false}}/>
-          <Stack.Screen name='GuideLine' component={GuideLine} options={{headerShown: false}}/>
+          <Stack.Screen name='Search_Pill' component={Search_Pill} options={{headerShown: false}}/>
           <Stack.Screen name='Information_Pill' component={Information_Pill} options={{headerShown: false}}/>
           <Stack.Screen name='Manage_Pill' component={Manage_Pill} options={{headerShown: false}}/>
-          <Stack.Screen name='Pharm_Search' component={Pharm_Search} options={{headerShown: false}}/>
+          <Stack.Screen name='Nearby_Pharmacies' component={Nearby_Pharmacies} options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>
   )

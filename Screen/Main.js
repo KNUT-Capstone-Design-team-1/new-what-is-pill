@@ -3,28 +3,26 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import { SafeAreaView, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
 
-export default class Main extends React.Component{
-  render(){
-    const {navigation} = this.props;
-    return(
-    <SafeAreaView style={styles.container}>
-      <SafeAreaView style={styles.logo_container}>
-        <Image style={styles.logo_st} source={require('../image/wip_logo.png')}/>
-      </SafeAreaView>
-      <SafeAreaView style={styles.menu_container}>
-        <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('GuideLine')}>
-          <Text style={styles.txt_st}>알약검색</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Pharm_Search')}>
-          <Text style={styles.txt_st}>주변 약국 찾기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Manage_Pill')}>
-          <Text style={styles.txt_st}>알약 관리</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+export default function Main(props){
+  const {navigation} = props;
+  return(
+  <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.logo_container}>
+      <Image style={styles.logo_st} source={require('../image/wip_logo.png')}/>
     </SafeAreaView>
-    )
-  }
+    <SafeAreaView style={styles.menu_container}>
+      <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Search_Pill')}>
+        <Text style={styles.txt_st}>알약검색</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
+        <Text style={styles.txt_st}>주변 약국 찾기</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Manage_Pill')}>
+        <Text style={styles.txt_st}>알약 관리</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({

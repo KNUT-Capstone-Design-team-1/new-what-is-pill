@@ -3,54 +3,47 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {SafeAreaView, TouchableOpacity, Text, StyleSheet, ToastAndroid, FlatList} from 'react-native'
 
-function Save_pill(){
+function Save_pill(props){
   ToastAndroid.showWithGravity('저장중..',ToastAndroid.LONG,ToastAndroid.CENTER)
 }
 
-export default class Information_Pill extends React.Component{
-  constructor(){
-    super();
-    this.state={
-      pills:[
-        {key:'이름', data:'각성제'},
-        {key:'효과', data:'각성효과'},
-        {key:'복용법', data:'하루 3알씩 식후 복용'},
-        {key:'보관법', data:'실온보관'},
-        // 스크롤지원
+export default function Information_Pill(props){
+  state={
+    pills:[
+      {key:'이름', data:'각성제'},
+      {key:'효과', data:'각성효과'},
+      {key:'복용법', data:'하루 3알씩 식후 복용'},
+      {key:'보관법', data:'실온보관'},
       ],
-    };
   }
 
-  render(){
-    const {navigation} = this.props;
-    const render_list = ({item}) => (
+  const {navigation} = props
+  const render_list = ({item}) => (
     <SafeAreaView style={styles.List_container}>
       <TouchableOpacity style={styles.List_st} onPress={()=>alert(`${item.data} 입니다`)}>
         <Text style={styles.txt_st}>{item.key}: {item.data}</Text>
       </TouchableOpacity>
+    </SafeAreaView>)
+
+  return(
+  <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={styles.header}>
+      <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>알약 정보</Text>
     </SafeAreaView>
-  );
-    return(
-    <SafeAreaView style={{flex:1}}>
-      <SafeAreaView style={styles.header}>
-        <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>알약 정보</Text>
-      </SafeAreaView>
-      <FlatList style={{width:'100%', height:'5%'}}
-      data={this.state.pills} renderItem={render_list}/>
-      <SafeAreaView style={styles.btn_container}>
-        <TouchableOpacity style={styles.btn_st1} onPress={()=>navigation.navigate('Pharm_Search')}>
-          <Text style={styles.txt_st}>주변 약국 검색</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn_st1} onPress={()=>Save_pill()}>
-          <Text style={styles.txt_st}>저장</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
-          <Text style={styles.txt_st}>메인화면</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+    <FlatList style={{width:'100%', height:'5%'}} data={state.pills} renderItem={render_list}/>
+    <SafeAreaView style={styles.btn_container}>
+      <TouchableOpacity style={styles.btn_st1} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
+        <Text style={styles.txt_st}>주변 약국 검색</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btn_st1} onPress={()=>Save_pill(props)}>
+        <Text style={styles.txt_st}>저장</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
+        <Text style={styles.txt_st}>메인화면</Text>
+      </TouchableOpacity>
     </SafeAreaView>
-    )
-  }
+  </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
