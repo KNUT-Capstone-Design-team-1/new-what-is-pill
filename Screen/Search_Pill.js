@@ -3,18 +3,23 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {launchCamera, launchImageLibrary, ImagePicker} from 'react-native-image-picker'
 import {SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} from 'react-native'
-global.img_temp = 'https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'
+global.img_uri = 'https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'
+global.img_base64 = ''
 
 export function camera(props){
   const options={
     mediaType:'photo',
     cameraType:'front',
     saveToPhotos:true,
-  };
-  const {navigation} = props
+    includeBase64:true,
+  }
   try {launchCamera(options, (uri)=>{
-    img_temp = uri.uri
-    if (uri.uri!=null){navigation.replace('Check_Pic')}})}
+    const {navigation} = props
+    if (uri.uri!=null){
+      img_uri = uri.uri
+      img_base64 = uri.base64
+      navigation.navigate('Check_Pic')
+    }})}
   catch(e){
     if (e=='camera_unavailable'){ToastAndroid.showWithGravity('카메라를 사용할 수 없습니다',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
     else if (e=='permission'){ToastAndroid.showWithGravity('앱의 카메라 권한을 허용해주세요.',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
@@ -23,12 +28,18 @@ export function camera(props){
 }
 
 export function gallery(props){
-  const options={ mediaType:'photo', quality:1, }
-  const {navigation} = props
-
+  const options={ 
+    mediaType:'photo', 
+    quality:1,
+    includeBase64:true, 
+  }
   try {launchImageLibrary(options, (uri)=>{
-    img_temp = uri.uri
-    if (uri.uri!=null){navigation.replace('Check_Pic')}})}
+    const {navigation} = props
+    if (uri.uri!=null){
+      img_uri = uri.uri
+      img_base64 = uri.base64
+      navigation.navigate('Check_Pic')
+    }})}
   catch(e){
     if (e=='permission'){ToastAndroid.showWithGravity('앱의 권한을 허용해주세요.',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
     else {ToastAndroid.showWithGravity(`오류코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.BOTTOM)}
@@ -36,17 +47,13 @@ export function gallery(props){
 }
 
 export default function Search_Pill(props){
-  img_temp='https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'
-  state = {image:img_temp,}
-  const {navigation} = props
-
   return(
   <SafeAreaView style={{flex:1}}>
     <SafeAreaView style={styles.header}>
       <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>촬영 가이드 라인</Text>
     </SafeAreaView>
     <SafeAreaView style={styles.image_container}>
-      <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={{uri:state.image}}/>
+      <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={{uri:img_uri}}/>
     </SafeAreaView>
     <SafeAreaView style={styles.text_container}>
       <Text style={styles.first_txt}>

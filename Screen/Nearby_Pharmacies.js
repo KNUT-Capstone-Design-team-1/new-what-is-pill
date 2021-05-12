@@ -15,7 +15,7 @@ export default function Nearby_Pharmacies(props){
       <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>주변 약국 검색 </Text>
     </SafeAreaView>
     <SafeAreaView style={styles.photo_container}>
-      <Image style={{height:'100%',width:'100%',resizeMode:'contain'}} source={require('../image/example.jpg')}/>
+      <Image style={{height:'100%',width:'100%',resizeMode:'contain'}} source={{uri:'https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'}}/>
     </SafeAreaView>
     <SafeAreaView style={styles.btn_container}>
       <TouchableOpacity style={styles.btn_st2} onPress={()=>call_to_pharmacy(props)}>

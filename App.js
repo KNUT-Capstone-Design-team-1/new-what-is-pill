@@ -10,24 +10,32 @@ import Search_Pill from './Screen/Search_Pill'
 import Information_Pill from './Screen/Information_Pill'
 import Manage_Pill from './Screen/Manage_Pill'
 import Nearby_Pharmacies from './Screen/Nearby_Pharmacies'
-
 const Stack = createStackNavigator();
 
-async function requestCameraPermission() {
-  const granted = await PermissionsAndroid.request(
+async function requestPermission() {
+  const granted = await PermissionsAndroid.requestMultiple([
     PermissionsAndroid.PERMISSIONS.CAMERA,
-    {
-      title: '카메라 권한 요청',
-      message: '알약 촬영을 위한 카메라 권한이 필요합니다.',
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+    PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    // PermissionsAndroid.PERMISSIONS.INTERNET,
+  ]).then((result)=>{
+    if (result['android.permission.CAMERA']
+    && result['android.permission.WRITE_EXTERNAL_STORAGE']
+    && result['android.permission.READ_EXTERNAL_STORAGE']
+    && result['android.permission.ACCESS_COARSE_LOCATION']
+    && result['android.permission.ACCESS_FINE_LOCATION']
+    === 'granted'){
+      ToastAndroid.showWithGravity('모든 권한 획득',ToastAndroid.LONG,ToastAndroid.CENTER)
+    } else {
+      ToastAndroid.showWithGravity('권한 거절',ToastAndroid.LONG,ToastAndroid.CENTER)
     }
-  );
-  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    console.log('Camera Permission Success')
-  } else {ToastAndroid.showWithGravity('카메라 권한이 거부되었습니다. 알약 촬영이 불가합니다.',ToastAndroid.LONG,ToastAndroid.CENTER)}
+  })
 }
 
 export default function App(){
-  requestCameraPermission()
+  requestPermission()
   return(
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Main'>
