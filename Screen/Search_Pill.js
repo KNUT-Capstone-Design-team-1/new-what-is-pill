@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {useState, useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {launchCamera, launchImageLibrary, ImagePicker} from 'react-native-image-picker'
@@ -18,7 +19,7 @@ export function camera(props){
     if (uri.uri!=null){
       img_uri = uri.uri
       img_base64 = uri.base64
-      navigation.navigate('Check_Pic')
+      navigation.replace('Check_Pic')
     }})}
   catch(e){
     if (e=='camera_unavailable'){ToastAndroid.showWithGravity('카메라를 사용할 수 없습니다',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
@@ -38,7 +39,7 @@ export function gallery(props){
     if (uri.uri!=null){
       img_uri = uri.uri
       img_base64 = uri.base64
-      navigation.navigate('Check_Pic')
+      navigation.replace('Check_Pic')
     }})}
   catch(e){
     if (e=='permission'){ToastAndroid.showWithGravity('앱의 권한을 허용해주세요.',ToastAndroid.LONG,ToastAndroid.BOTTOM)} 
@@ -47,13 +48,15 @@ export function gallery(props){
 }
 
 export default function Search_Pill(props){
+  const [image, set_image] = useState(img_uri)
+  const change_image=()=>{set_image(img_uri)}
   return(
   <SafeAreaView style={{flex:1}}>
     <SafeAreaView style={styles.header}>
       <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>촬영 가이드 라인</Text>
     </SafeAreaView>
     <SafeAreaView style={styles.image_container}>
-      <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={{uri:img_uri}}/>
+      <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={{uri:image}}/>
     </SafeAreaView>
     <SafeAreaView style={styles.text_container}>
       <Text style={styles.first_txt}>
