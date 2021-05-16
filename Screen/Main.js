@@ -1,10 +1,12 @@
 import * as React from 'react'
+import {useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import { SafeAreaView, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
 
 export default function Main(props){
   const {navigation} = props
+
   return(
   <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.logo_container}>

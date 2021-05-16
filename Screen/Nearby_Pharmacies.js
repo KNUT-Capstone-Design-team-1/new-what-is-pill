@@ -1,31 +1,42 @@
 import * as React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, Alert, ToastAndroid} from 'react-native'
+import {WebView} from 'react-native-webview'
+import RNLocation from 'react-native-location'
+import { SafeAreaView, TouchableOpacity, Text, StyleSheet, ToastAndroid} from 'react-native'
 
-export function call_to_pharmacy(){
-  ToastAndroid.showWithGravity('전화중..',ToastAndroid.LONG,ToastAndroid.CENTER)
+async function get_pharm_list(){
+  RNLocation.subscribeToLocationUpdates()
+  RNLocation.getLatestLocation({ timeout: 60000 }).then(async latestLocation => {
+    console.log('x = ', latestLocation.longitude, 'y =', latestLocation.latitude)
+    try{
+      let response = await fetch('https://dapi.kakao.com/v2/local/search/category.json?category\_group\_code=PM9&radius=20000&x='+latestLocation.longitude+'&y='+latestLocation.latitude+'&input_coord=WGS84',{
+        headers:{
+          Authorization : 'KakaoAK 33a8b02db1a0de6d37b4d7de43955e46'
+        },
+    })
+    const result = await response.text()
+    console.log(result)
+    }catch(e){ console.log(e) }
+  })
 }
 
 export default function Nearby_Pharmacies(props){
   const {navigation} = props;
+  get_pharm_list()
+
   return(
-  <SafeAreaView style={{flex:1}}>
-    <SafeAreaView style={styles.header}>
-      <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>주변 약국 검색 </Text>
+    <SafeAreaView style={{flex:1}}>
+      <SafeAreaView style={styles.header}>
+        <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>주변 약국 찾기</Text>
+      </SafeAreaView>
+        <WebView style={{flex:1}} source={{uri:'www.naver.com'}} useWebkit={true}/>
+      <SafeAreaView style={styles.btn_container}>
+        <TouchableOpacity style={styles.btn_st}>
+          <Text style={styles.txt_st}>약국검색</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
     </SafeAreaView>
-    <SafeAreaView style={styles.photo_container}>
-      <Image style={{height:'100%',width:'100%',resizeMode:'contain'}} source={{uri:'https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'}}/>
-    </SafeAreaView>
-    <SafeAreaView style={styles.btn_container}>
-      <TouchableOpacity style={styles.btn_st2} onPress={()=>call_to_pharmacy(props)}>
-        <Text style={styles.txt_st}>전화</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
-        <Text style={styles.txt_st}>메인화면</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
-  </SafeAreaView>
   )
 }
 
@@ -35,11 +46,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#83FFB3',
     justifyContent:'center',
     alignItems:'center'
-  },
-  photo_container:{
-    flex:1.5,
-    alignItems:'center',
-    margin:'2%',
   },
   btn_container:{
     flex:0.35,
@@ -53,7 +59,7 @@ const styles = StyleSheet.create({
     fontSize:30, 
     fontFamily:'Jua-Regular', 
   },
-  btn_st1:{
+  btn_st:{
     height:'40%',
     width:'100%',
     justifyContent:'center',
@@ -61,14 +67,5 @@ const styles = StyleSheet.create({
     backgroundColor:'#83FFB3',
     borderRadius: 5,
     marginTop:'-50%'
-  },
-  btn_st2:{
-    height:'40%',
-    width:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#83FFB3',
-    borderRadius: 5,
-    marginTop:'2%'
   },
 });

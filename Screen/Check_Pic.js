@@ -2,23 +2,25 @@ import * as React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import * as Search_Pill from './Search_Pill'
-import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, Alert, ToastAndroid} from 'react-native'
+import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} from 'react-native'
 
-export async function Send_img(props){
-  const {navigation} = props
+async function Send_img(props){
   ToastAndroid.showWithGravity('검색중..',ToastAndroid.LONG,ToastAndroid.CENTER)
-  // navigation.navigate('Information_pill')
   try{
+    const {navigation} = props
     const post_data = {'img_base64' : img_base64}
     let response = await fetch('http://52.79.235.20:5000/data',{
       method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
-      },
+      headers:{'Content-Type': 'application/json',},
       body:JSON.stringify(post_data)
     })
     let result = await response.text()
     ToastAndroid.showWithGravity(`${result}`,ToastAndroid.LONG,ToastAndroid.CENTER)
+    if (result == 'Success'){
+      navigation.navigate('Information_Pill')
+    } else {
+      ToastAndroid.showWithGravity('다시 시도해 주십시오',ToastAndroid.LONG,ToastAndroid.CENTER)
+    }
   }catch(e){
     ToastAndroid.showWithGravity(`에러코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.CENTER)
   }
