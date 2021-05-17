@@ -24,6 +24,11 @@ public class ApiController {
         ApiResponseDto res = restService.res(requestDto);
 
         return res;
+    }
 
+    @PostMapping("/ml")
+    public ApiRequestDto mlResponse(@RequestBody ApiRequestDto requestDto){
+
+        return requestDto;
     }
 }
