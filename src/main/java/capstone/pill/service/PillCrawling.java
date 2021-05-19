@@ -29,9 +29,9 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+//    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
     //리눅스 배포 버전
-//    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
@@ -53,7 +53,7 @@ public class PillCrawling {
             options.addArguments("--headless");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--remote-debugging-port=9222");
+//            options.addArguments("--remote-debugging-port=9222");
             driver = new ChromeDriver(options);
             log.info("-------driver 인스턴스-------");
 
@@ -62,40 +62,27 @@ public class PillCrawling {
             log.info("--------base url 시작----------------");
             // get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
             driver.get(base_url);
-
             // iframe 내부에서 id 필드 탐색
             webElement = driver.findElement(By.id("drug_print_front"));
-
             // 이 약이름 삽입
             webElement.sendKeys(drug_name);
-
             // 제형 지정
             String type = typeone(drug_type);
             driver.findElement(By.xpath("//*[@id='type_" + type + "']")).click();
-
             // 모양 지정
             String shape = shapeone(drug_shape);
             driver.findElement(By.xpath("//*[@id='shape_" + shape + "']")).click();
-
             // 색상 지정
             String color = colorone(drug_color);
             driver.findElement(By.xpath("//*[@id='color_" + color + "']")).click();
-
             // 분할선 지정
             String line = lineone(drug_line);
             driver.findElement(By.xpath("//*[@id='line_" + line + "']")).click();
-
             // 검색클릭
             driver.findElement(By.id("btn_idfysearch")).click();
-
-            Thread.sleep(1000);
             driver.findElement(By.cssSelector("#idfytotal0 > tbody > tr:nth-child(3) > td.txtL.name")).click();
-
-
-            Thread.sleep(1000);
             driver.findElement(By.cssSelector("#search_identity_result > article:nth-child(3) > div > a.btn05")).click();
 
-            Thread.sleep(1000);
             String effect = driver.findElement(By.xpath("//*[@id=\"effect\"]")).getText();
             String dosage = driver.findElement(By.xpath("//*[@id=\"dosage\"]")).getText();
             String caution = driver.findElement(By.xpath("//*[@id=\"caution\"]")).getText();
@@ -113,7 +100,7 @@ public class PillCrawling {
 
         } finally {
             driver.quit();
-            driver.close();
+//            driver.close();
         }
         return null;
     }
