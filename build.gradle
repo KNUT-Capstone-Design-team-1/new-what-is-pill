@@ -15,7 +15,7 @@ configurations {
 	}
 }
 
-mainClassName = 'capstone.pill.PillApplication'
+mainClassName = 'capstone.poll.PillApplication'
 
 repositories {
 	mavenCentral()

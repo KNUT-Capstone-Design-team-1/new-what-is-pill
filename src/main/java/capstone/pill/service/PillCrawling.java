@@ -3,6 +3,7 @@ package capstone.pill.service;
 import capstone.pill.dto.ApiResponseDto;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 @Data
 @Builder
+@Slf4j
 public class PillCrawling {
 
     //약 특징 변수
@@ -27,9 +29,9 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "D:/Capstone/chromedriver.exe";
+//    public static final String WEB_DRIVER_PATH = "D:/Capstone/chromedriver.exe";
     //리눅스 배포 버전
-//    public static final String WEB_DRIVER_PATH = "/usr/local/share/chromedriver";
+    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
@@ -38,20 +40,21 @@ public class PillCrawling {
     public ApiResponseDto crawl() {
         try {
 
+            log.info("--------crawl()시작----------------");
             // System Property SetUp
             System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
             // Driver SetUp
             ChromeOptions options = new ChromeOptions();
             options.setCapability("ignoreProtectedModeSettings", true);
-//            options.addArguments("headless");
-//            options.addArguments("no-sandbox");
-//            options.addArguments("disable-dev-shm-usage");
-//            options.addArguments("lang=ko");
+            options.addArguments("headless");
+            options.addArguments("no-sandbox");
+            options.addArguments("disable-dev-shm-usage");
+            options.addArguments("lang=ko");
             driver = new ChromeDriver(options);
             base_url = "https://www.health.kr/searchIdentity/search.asp";
 
-
+            log.info("--------base url 시작----------------");
             // get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
             driver.get(base_url);
 
@@ -79,7 +82,6 @@ public class PillCrawling {
 
             // 검색클릭
             driver.findElement(By.id("btn_idfysearch")).click();
-            ;
 
             Thread.sleep(1000);
             driver.findElement(By.cssSelector("#idfytotal0 > tbody > tr:nth-child(3) > td.txtL.name")).click();
@@ -105,7 +107,7 @@ public class PillCrawling {
             e.printStackTrace();
 
         } finally {
-
+            driver.quit();
             driver.close();
         }
         return null;
