@@ -71,7 +71,7 @@ set CLASSPATH=%APP_HOME%\lib\pill-0.0.1-SNAPSHOT.jar;%APP_HOME%\lib\spring-boot-
 
 
 @rem Execute pill
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %PILL_OPTS%  -classpath "%CLASSPATH%" capstone.poll.PillApplication %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %PILL_OPTS%  -classpath "%CLASSPATH%" capstone.pill.PillApplication %*
 
 :end
 @rem End local scope for the variables with windows NT shell

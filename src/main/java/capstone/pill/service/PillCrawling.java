@@ -47,11 +47,11 @@ public class PillCrawling {
             // Driver SetUp
             ChromeOptions options = new ChromeOptions();
             options.setCapability("ignoreProtectedModeSettings", true);
-            options.addArguments("headless");
-            options.addArguments("no-sandbox");
-            options.addArguments("disable-dev-shm-usage");
-            options.addArguments("lang=ko");
+            options.addArguments("--headless");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
             driver = new ChromeDriver(options);
+            log.info("-------driver 인스턴스-------");
             base_url = "https://www.health.kr/searchIdentity/search.asp";
 
             log.info("--------base url 시작----------------");
