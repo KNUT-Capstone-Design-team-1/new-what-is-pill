@@ -53,7 +53,7 @@ export default function Search_Pill(props){
   return(
   <SafeAreaView style={{flex:1}}>
     <SafeAreaView style={styles.header}>
-      <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>촬영 가이드 라인</Text>
+      <Text style={{color:'black', fontSize:30, fontFamily:'Jua-Regular'}}>촬영 가이드 라인</Text>
     </SafeAreaView>
     <SafeAreaView style={styles.image_container}>
       <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={{uri:image}}/>

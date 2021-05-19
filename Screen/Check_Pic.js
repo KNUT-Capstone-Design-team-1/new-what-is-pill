@@ -31,7 +31,7 @@ export default function Check_Pic(props){
   return(
   <SafeAreaView style={{flex:1}}>
     <SafeAreaView style={styles.header}>
-      <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>사진 확인</Text>
+      <Text style={{color:'black', fontSize:30, fontFamily:'Jua-Regular'}}>사진 확인</Text>
     </SafeAreaView>
     <SafeAreaView style={styles.photo_container}>
       <Image style={{height:'70%',width:'100%',resizeMode:'contain'}} source={{uri:img_uri}}/>

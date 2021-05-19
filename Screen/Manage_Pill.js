@@ -36,7 +36,7 @@ export default function Manage_Pill(props){
   return(
   <SafeAreaView style={{flex:1}}>
     <SafeAreaView style={styles.header}>
-      <Text style={{color:'black', fontSize:35, fontFamily:'Jua-Regular'}}>알약 관리</Text>
+      <Text style={{color:'black', fontSize:30, fontFamily:'Jua-Regular'}}>알약 관리</Text>
     </SafeAreaView>
     <FlatList style={{width:'100%', height:'5%'}} data={state.pills} renderItem={render_list}/>
     <SafeAreaView style={styles.btn_container}>
