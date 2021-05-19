@@ -41,9 +41,11 @@ public class PillCrawling {
         try {
 
             log.info("--------crawl()시작----------------");
+            log.info("하루하루 떨어져가네네에에에");
             // System Property SetUp
             System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
+            log.info("--------System.setProperty시작----------------");
             // Driver SetUp
             ChromeOptions options = new ChromeOptions();
             options.setCapability("ignoreProtectedModeSettings", true);
