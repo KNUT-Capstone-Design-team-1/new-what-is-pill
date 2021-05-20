@@ -2,10 +2,52 @@ import * as React from 'react'
 import {useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
+import RNLocation from 'react-native-location'
 import { SafeAreaView, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
+global.place=''
+global.pharm_list_btn=[]
+
+async function get_pharm_list(){
+  RNLocation.subscribeToLocationUpdates()
+  RNLocation.getLatestLocation({ timeout: 60000 }).then(async latestLocation => {
+    console.log('x = ', latestLocation.longitude, 'y =', latestLocation.latitude)
+    try{
+      // latestLocation.longitude   latestLocation.latitude
+      let response = await fetch('https://dapi.kakao.com/v2/local/search/category.json?category\_group\_code=PM9&radius=20000&x=127.08399953&y=36.9919731&input_coord=WGS84',{
+        headers:{Authorization : 'KakaoAK 33a8b02db1a0de6d37b4d7de43955e46'},})
+      const result_tmp = await response.json()
+      const result = result_tmp.documents.map(res => ({'name': res.place_name, 'url': res.place_url}));
+      place = result;
+    }catch(e){ console.log(e) }
+    console.log(place)
+    // for (var i=0; i<place.length; i++){
+    //   pharm_list_btn.push(
+    //     <SafeAreaView>
+    //       <TouchableOpacity style={{flex:1, width:'90%', height:'30%'}} OnPress={web()}>
+    //       <Text style={{fontSize:25, fontFamily:'Jua-Regular'}}>{place[i].name}</Text>
+    //       </TouchableOpacity>
+    //     </SafeAreaView>
+    //   )
+    // }
+    pharm_list_btn.push(
+      <SafeAreaView>
+        <TouchableOpacity style={{flex:1, width:'90%', height:'30%'}} OnPress={web()}>
+        <Text style={{fontSize:25, fontFamily:'Jua-Regular'}}>{place[1].name}</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    )
+    console.log(typeof pharm_list_btn)
+  })
+}
+
+async function web(){
+
+}
+
 
 export default function Main(props){
   const {navigation} = props
+  get_pharm_list()
 
   return(
   <SafeAreaView style={styles.container}>

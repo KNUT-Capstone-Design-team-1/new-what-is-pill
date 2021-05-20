@@ -9,7 +9,7 @@ async function Send_img(props){
   try{
     const {navigation} = props
     const post_data = {'img_base64' : img_base64}
-    let response = await fetch('http://52.79.235.20:5000/data',{
+    let response = await fetch('http://13.125.225.24:5000/data',{
       method: 'POST',
       headers:{'Content-Type': 'application/json',},
       body:JSON.stringify(post_data)
