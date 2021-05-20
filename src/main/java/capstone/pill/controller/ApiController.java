@@ -27,8 +27,8 @@ public class ApiController {
     }
 
     @PostMapping("/ml")
-    public ApiRequestDto mlResponse(@RequestBody ApiRequestDto requestDto){
+    public String mlResponse(@RequestBody ApiRequestDto requestDto){
 
-        return requestDto;
+        return "status ok";
     }
 }
