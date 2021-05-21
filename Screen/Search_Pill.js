@@ -7,6 +7,7 @@ import {SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} f
 global.img_uri = 'https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'
 global.img_base64 = ''
 
+// 카메라 실행
 export function camera(props){
   const options={
     mediaType:'photo',
@@ -28,6 +29,7 @@ export function camera(props){
   }
 }
 
+// 갤러리 실행
 export function gallery(props){
   const options={ 
     mediaType:'photo', 
@@ -50,14 +52,18 @@ export function gallery(props){
 export default function Search_Pill(props){
   const [image, set_image] = useState(img_uri)
   const change_image=()=>{set_image(img_uri)}
+
   return(
   <SafeAreaView style={{flex:1}}>
+
     <SafeAreaView style={styles.header}>
       <Text style={{color:'black', fontSize:30, fontFamily:'Jua-Regular'}}>촬영 가이드 라인</Text>
     </SafeAreaView>
+
     <SafeAreaView style={styles.image_container}>
-      <Image style={{height:'120%', width:'100%', resizeMode:'contain'}} source={{uri:image}}/>
+      <Image style={styles.photo_st} source={{uri:image}}/>
     </SafeAreaView>
+
     <SafeAreaView style={styles.text_container}>
       <Text style={styles.first_txt}>
       1. 알약이 잘보이게 찍는다</Text>
@@ -66,14 +72,19 @@ export default function Search_Pill(props){
       <Text style={styles.txt_st}>
       3. 색상이 잘보이게 찍는다</Text>
     </SafeAreaView>
+
     <SafeAreaView style={styles.btn_container}>
+
       <TouchableOpacity style={styles.btn_st} onPress={()=>camera(props)}>
         <Text style={styles.btn_txt}>카메라</Text>
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.btn_st} onPress={()=>gallery(props)}>
         <Text style={styles.btn_txt}>갤러리</Text>
       </TouchableOpacity>
+
     </SafeAreaView>
+
   </SafeAreaView>
   )
 }
@@ -83,23 +94,28 @@ const styles = StyleSheet.create({
     flex:0.3,
     backgroundColor:'#83FFB3',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
   },
   image_container:{
     flex:1.7,
     justifyContent:'center',
     alignItems:'center',
-    marginTop:"8%"
+    marginTop:"8%",
+  },
+  photo_st:{
+    height:'120%',
+    width:'100%',
+    resizeMode:'contain',
   },
   text_container:{
     flex:1,
-    marginTop:'7%'
+    marginTop:'7%',
   },
   btn_container:{
     flex:0.8,
     justifyContent:'center', 
     alignItems:'center',
-    flexDirection:'row'
+    flexDirection:'row',
   },
   first_txt:{
     color:'black', 
@@ -107,14 +123,14 @@ const styles = StyleSheet.create({
     fontFamily:'Jua-Regular', 
     marginTop:'5%', 
     marginLeft:'3%', 
-    marginBottom:'3%'
+    marginBottom:'3%',
   },
   txt_st:{
     color:'black', 
     fontSize:25, 
     fontFamily:'Jua-Regular', 
     marginLeft:'3%', 
-    marginBottom:'3%'
+    marginBottom:'3%',
   },
   btn_st:{
     height: '30%',
@@ -124,11 +140,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:"-15%"
+    marginBottom:"-15%",
   },
   btn_txt:{
     color:'black', 
     fontSize:25, 
-    fontFamily:'Jua-Regular'
+    fontFamily:'Jua-Regular',
   },
 });

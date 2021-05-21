@@ -1,40 +1,62 @@
 import * as React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
-import {WebView} from 'react-native-webview'
-import { SafeAreaView, TouchableOpacity, Text, StyleSheet, ToastAndroid} from 'react-native'
-global.clicked=0
+import { SafeAreaView, TouchableOpacity, Text, StyleSheet, FlatList} from 'react-native'
+global.pharm_url=''
 
 export default function Nearby_Pharmacies(props){
   const {navigation} = props;
+  const render_list = ({item}) => (
+    <SafeAreaView style={{flex:1, margin:'1.5%'}}>
+
+      <TouchableOpacity style={styles.List_st} onPress={()=>{
+        pharm_url=item.url
+        navigation.navigate('Pharmacy_info')}}>
+        <Text style={styles.txt_st}>{item.name}</Text>
+      </TouchableOpacity>
+
+    </SafeAreaView>
+  )
+
   return(
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{flex:1, margin:'1.5%'}}>
+
       <SafeAreaView style={styles.header}>
-        <Text style={{color:'black', fontSize:30, fontFamily:'Jua-Regular'}}>주변 약국 찾기</Text>
+        <Text style={styles.txt_st}>주변 약국 찾기</Text>
       </SafeAreaView>
-      <SafeAreaView style={{flex:1}}>
-        {
-          clicked === 1
-          ? {pharm_list_btn}
-          :(<WebView style={{flex:1}} source={{uri:'http://place.map.kakao.com/8731490'}} useWebkit={true}/>)
-        }
-      </SafeAreaView>
+
+      <FlatList style={styles.FlatList_st} data={place} renderItem={render_list}/>
+
       <SafeAreaView style={styles.btn_container}>
+
         <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Main')}>
           <Text style={styles.txt_st}>메인화면</Text>
         </TouchableOpacity>
+
       </SafeAreaView>
+
     </SafeAreaView>
   )
   }
-  
   
 const styles = StyleSheet.create({
   header:{
     flex:0.07,
     backgroundColor:'#83FFB3',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+  },
+  List_st:{
+    height:'100%',
+    width:'100%',
+    borderWidth:1,
+    borderRadius:8,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  FlatList_st:{
+    width:'100%', 
+    height:'5%',
   },
   btn_container:{
     flex:0.2,
