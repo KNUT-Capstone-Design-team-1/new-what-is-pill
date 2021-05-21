@@ -1,9 +1,11 @@
 import * as React from 'react'
+import {useEffect} from 'react'
 import 'react-native-gesture-handler'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions'
 import {ToastAndroid, PermissionsAndroid} from 'react-native'
+import SplashScreen from 'react-native-splash-screen'
 import Main from './Screen/Main'
 import Check_Pic from './Screen/Check_Pic'
 import Search_Pill from './Screen/Search_Pill'
@@ -37,6 +39,8 @@ async function requestPermission() {
 
 // 화면 이동을 위한 Stack
 export default function App(){
+  useEffect(()=>{setTimeout(() => {SplashScreen.hide()}, 2500)})
+  
   requestPermission()
   return(
       <NavigationContainer>

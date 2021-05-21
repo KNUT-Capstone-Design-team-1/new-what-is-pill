@@ -25,6 +25,7 @@ async function Send_img(props){
   }catch(e){ToastAndroid.showWithGravity(`에러코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.CENTER)}
 }
 
+
 export default function Check_Pic(props){
   const {navigation} = props
   return(

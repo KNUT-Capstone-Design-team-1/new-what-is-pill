@@ -16,7 +16,7 @@ async function get_pharm_list(){
   RNLocation.getLatestLocation({ timeout: 60000 }).then(async latestLocation => {
     try{
       // latestLocation.longitude   latestLocation.latitude
-      let response = await fetch('https://dapi.kakao.com/v2/local/search/category.json?category\_group\_code=PM9&radius=20000&x=127.08399953&y=36.9919731&input_coord=WGS84',{
+      let response = await fetch('https://dapi.kakao.com/v2/local/search/category.json?category\_group\_code=PM9&radius=20000&x='+latestLocation.longitude+'&y='+latestLocation.latitude+'&input_coord=WGS84',{
         headers:{Authorization : 'KakaoAK 33a8b02db1a0de6d37b4d7de43955e46'},})
 
       // 카카오맵으로 부터 응답받은 데이터를 json으로 파싱
