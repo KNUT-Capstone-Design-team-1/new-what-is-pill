@@ -5,8 +5,11 @@ capstone/pill/dto/ApiRequestDto.java
 capstone/pill/service/PillCrawling.java
  capstone.pill.service.PillCrawling
  capstone.pill.service.PillCrawling$PillCrawlingBuilder
+capstone/pill/dto/ImageRequestDto.java
+ capstone.pill.dto.ImageRequestDto
 capstone/pill/controller/ApiController.java
  capstone.pill.controller.ApiController
+ capstone.pill.controller.ApiController$imageRequestDto
 capstone/pill/dto/ApiResponseDto.java
  capstone.pill.dto.ApiResponseDto
 capstone/pill/PillApplication.java

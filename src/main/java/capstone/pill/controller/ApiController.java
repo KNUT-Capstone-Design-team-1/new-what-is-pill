@@ -3,6 +3,7 @@ package capstone.pill.controller;
 import capstone.pill.dto.ApiRequestDto;
 import capstone.pill.dto.ApiResponseDto;
 import capstone.pill.service.RestService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,5 +31,17 @@ public class ApiController {
     public String mlResponse(@RequestBody ApiRequestDto requestDto){
 
         return "status ok";
+    }
+
+    @PostMapping("/image")
+    public ApiResponseDto search(@RequestBody imageRequestDto imageRequestDto){
+        ApiResponseDto response = restService.toML(imageRequestDto.getImg_base64());
+
+        return response;
+    }
+
+    @Data
+    static class imageRequestDto{
+        private String img_base64;
     }
 }
