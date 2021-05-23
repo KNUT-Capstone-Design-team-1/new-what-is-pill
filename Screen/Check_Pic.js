@@ -6,23 +6,25 @@ import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} 
 
 // 인공지능 서버로의 데이터 전송
 async function Send_img(props){
-  ToastAndroid.showWithGravity('검색중..',ToastAndroid.LONG,ToastAndroid.CENTER)
+  ToastAndroid.showWithGravity('검색중..',ToastAndroid.SHORT,ToastAndroid.CENTER)
 
   try{
     const {navigation} = props
     const post_data = {'img_base64' : img_base64}
 
-    // 인공지능 서버로 REST를 통해 POST로 전송 및 전송 성공 여부 확인
-    let response = await fetch('http://13.125.225.24:5000/data',{
+    // 메인 서버로 REST를 통해 POST로 전송 및 전송 성공 여부 확인
+    let response = await fetch('http://3.37.82.154:8080/image',{
       method: 'POST',
       headers:{'Content-Type': 'application/json',},
       body:JSON.stringify(post_data)})
-    let result = await response.text()
-    ToastAndroid.showWithGravity(`${result}`,ToastAndroid.LONG,ToastAndroid.CENTER)
-
-    if (result == 'Success'){navigation.navigate('Information_Pill')}
-    else {ToastAndroid.showWithGravity('다시 시도해 주십시오',ToastAndroid.LONG,ToastAndroid.CENTER)}
-  }catch(e){ToastAndroid.showWithGravity(`에러코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.CENTER)}
+    let resp_tmp = await response.text()
+    console.log('response : ',resp_tmp)
+    const resp = resp_tmp.body.map(res => ({'effect': res.effect, 'dosage': res.dosage, 'caution': res.caution}));
+    
+    navigation.navigate('loading_page')
+  }catch(e){
+    ToastAndroid.showWithGravity(`에러코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.CENTER)
+    console.log(e)}
 }
 
 
@@ -51,6 +53,10 @@ export default function Check_Pic(props){
 
       <TouchableOpacity style={styles.btn_st2} onPress={()=>Search_Pill.gallery(props)}>
         <Text style={styles.txt_st}>갤러리</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
+        <Text style={styles.txt_st}>메인화면</Text>
       </TouchableOpacity>
 
     </SafeAreaView>
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     backgroundColor:'#83FFB3',
     borderRadius: 5,
-    marginTop:'-50%',
+    marginTop:'-40%',
   },
   btn_st2:{
     height:'40%',

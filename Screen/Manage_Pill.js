@@ -12,17 +12,6 @@ export default function Manage_Pill(props){
   state={
     pills:[
       {key:'0', data:'각성제'},
-      {key:'1', data:'페놀타인 정'},
-      {key:'2', data:'타이레놀 정'},
-      {key:'3', data:'크레아틴 정'},
-      {key:'4', data:'루테인 정'},
-      {key:'5', data:'비타민 정'},
-      {key:'6', data:'칼슘 정'},
-      {key:'7', data:'ZMA 정'},
-      {key:'8', data:'아연 정'},
-      {key:'9', data:'나트륨 정'},
-      {key:'10', data:'우환청심환 정'},
-      {key:'12', data:'아인슈타인 정'},
     ],
   }
 

@@ -8,10 +8,10 @@ export default function Pharmacy_info(props){
   const {navigation} = props;
 
   return(
-    <SafeAreaView style={{flex:1, margin:'1.5%'}}>
+    <SafeAreaView style={{flex:1}}>
 
       <SafeAreaView style={styles.header}>
-        <Text style={styles.header_txt}>주변 약국 찾기</Text>
+        <Text style={styles.txt_st}>약국 정보</Text>
       </SafeAreaView>
 
       <WebView style={{flex:1}} source={{uri:pharm_url}} useWebkit={true}/>

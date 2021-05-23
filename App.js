@@ -13,6 +13,7 @@ import Information_Pill from './Screen/Information_Pill'
 import Manage_Pill from './Screen/Manage_Pill'
 import Nearby_Pharmacies from './Screen/Nearby_Pharmacies'
 import Pharmacy_info from './Screen/Pharmacy_info'
+import loading_page from './Screen/loading_page'
 const Stack = createStackNavigator();
 
 // 카메라, 내ㆍ외장 스토리지, GPS 권한 요청
@@ -44,7 +45,7 @@ export default function App(){
   requestPermission()
   return(
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Main'>
+        <Stack.Navigator initialRouteName='Information_Pill'>
           <Stack.Screen name='Main' component={Main} options={{headerShown: false}}/>
           <Stack.Screen name='Check_Pic' component={Check_Pic} options={{headerShown: false}}/>
           <Stack.Screen name='Search_Pill' component={Search_Pill} options={{headerShown: false}}/>
@@ -52,6 +53,7 @@ export default function App(){
           <Stack.Screen name='Manage_Pill' component={Manage_Pill} options={{headerShown: false}}/>
           <Stack.Screen name='Nearby_Pharmacies' component={Nearby_Pharmacies} options={{headerShown: false}}/>
           <Stack.Screen name='Pharmacy_info' component={Pharmacy_info} options={{headerShown: false}}/>
+          <Stack.Screen name='loading_page' component={loading_page} options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>
   )

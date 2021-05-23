@@ -12,7 +12,7 @@ export default function Information_Pill(props){
   state={
     pills:[
       {key:'이름', data:'각성제'},
-      {key:'효과', data:'각성효과'},
+      {key:'효능 및 효과', data:'각성효과'},
       {key:'복용법', data:'하루 3알씩 식후 복용'},
       {key:'보관법', data:'실온보관'},
       ],

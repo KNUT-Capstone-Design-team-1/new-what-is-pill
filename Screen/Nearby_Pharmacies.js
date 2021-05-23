@@ -19,7 +19,7 @@ export default function Nearby_Pharmacies(props){
   )
 
   return(
-    <SafeAreaView style={{flex:1, margin:'1.5%'}}>
+    <SafeAreaView style={{flex:1}}>
 
       <SafeAreaView style={styles.header}>
         <Text style={styles.txt_st}>주변 약국 찾기</Text>

@@ -4,7 +4,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {launchCamera, launchImageLibrary, ImagePicker} from 'react-native-image-picker'
 import {SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} from 'react-native'
-global.img_uri = 'https://user-images.githubusercontent.com/33280934/117855772-c6e30400-b2c5-11eb-9d5c-97d1d2ad8262.jpg'
+global.img_uri = 'https://user-images.githubusercontent.com/33280934/119253999-db40ce00-bbee-11eb-8757-1be2fc2702cb.jpg'
 global.img_base64 = ''
 
 // 카메라 실행
@@ -57,7 +57,7 @@ export default function Search_Pill(props){
   <SafeAreaView style={{flex:1}}>
 
     <SafeAreaView style={styles.header}>
-      <Text style={{color:'black', fontSize:30, fontFamily:'Jua-Regular'}}>촬영 가이드 라인</Text>
+      <Text style={styles.header_txt}>촬영 가이드 라인</Text>
     </SafeAreaView>
 
     <SafeAreaView style={styles.image_container}>
@@ -65,22 +65,24 @@ export default function Search_Pill(props){
     </SafeAreaView>
 
     <SafeAreaView style={styles.text_container}>
-      <Text style={styles.first_txt}>
-      1. 알약이 잘보이게 찍는다</Text>
       <Text style={styles.txt_st}>
-      2. 글씨가 잘보이게 찍는다</Text>
+      1. 알약의 글자가 나오게 찍어주세요</Text>
       <Text style={styles.txt_st}>
-      3. 색상이 잘보이게 찍는다</Text>
+      2. 하나의 알약만 찍어주세요</Text>
+      <Text style={styles.txt_st}>
+      3. 글자가 잘 보이도록 가까이서 찍어주세요</Text>
+      <Text style={styles.txt_st}>
+      4. 손바닥과 알약이 잘 구분되게 찍어주세요</Text>
     </SafeAreaView>
 
     <SafeAreaView style={styles.btn_container}>
 
       <TouchableOpacity style={styles.btn_st} onPress={()=>camera(props)}>
-        <Text style={styles.btn_txt}>카메라</Text>
+        <Text style={styles.header_txt}>카메라</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.btn_st} onPress={()=>gallery(props)}>
-        <Text style={styles.btn_txt}>갤러리</Text>
+        <Text style={styles.header_txt}>갤러리</Text>
       </TouchableOpacity>
 
     </SafeAreaView>
@@ -91,10 +93,15 @@ export default function Search_Pill(props){
 
 const styles = StyleSheet.create({
   header:{
-    flex:0.3,
+    flex:0.25,
     backgroundColor:'#83FFB3',
     justifyContent:'center',
     alignItems:'center',
+  },
+  header_txt:{
+    color:'black', 
+    fontSize:30, 
+    fontFamily:'Jua-Regular', 
   },
   image_container:{
     flex:1.7,
@@ -109,28 +116,21 @@ const styles = StyleSheet.create({
   },
   text_container:{
     flex:1,
+    paddingTop:'7%',
     marginTop:'7%',
+  },
+  txt_st:{
+    color:'black', 
+    fontSize:22, 
+    fontFamily:'Jua-Regular', 
+    marginLeft:'3%', 
+    marginBottom:'3%',
   },
   btn_container:{
     flex:0.8,
     justifyContent:'center', 
     alignItems:'center',
     flexDirection:'row',
-  },
-  first_txt:{
-    color:'black', 
-    fontSize:25, 
-    fontFamily:'Jua-Regular', 
-    marginTop:'5%', 
-    marginLeft:'3%', 
-    marginBottom:'3%',
-  },
-  txt_st:{
-    color:'black', 
-    fontSize:25, 
-    fontFamily:'Jua-Regular', 
-    marginLeft:'3%', 
-    marginBottom:'3%',
   },
   btn_st:{
     height: '30%',
@@ -141,10 +141,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:"-15%",
-  },
-  btn_txt:{
-    color:'black', 
-    fontSize:25, 
-    fontFamily:'Jua-Regular',
   },
 });
