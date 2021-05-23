@@ -9,6 +9,7 @@ capstone/pill/dto/ImageRequestDto.java
  capstone.pill.dto.ImageRequestDto
 capstone/pill/controller/ApiController.java
  capstone.pill.controller.ApiController
+ capstone.pill.controller.ApiController$applicationResponseTest
  capstone.pill.controller.ApiController$imageRequestDto
 capstone/pill/dto/ApiResponseDto.java
  capstone.pill.dto.ApiResponseDto
