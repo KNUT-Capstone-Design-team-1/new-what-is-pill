@@ -33,6 +33,12 @@ public class ApiController {
         return "status ok";
     }
 
+    @PostMapping("/application")
+    public String application(@RequestBody imageRequestDto imageRequestDto){
+        return "Success";
+    }
+
+
     @PostMapping("/image")
     public ApiResponseDto search(@RequestBody imageRequestDto imageRequestDto){
         ApiResponseDto response = restService.toML(imageRequestDto.getImg_base64());
