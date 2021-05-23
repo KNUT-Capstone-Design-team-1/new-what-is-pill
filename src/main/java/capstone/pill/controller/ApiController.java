@@ -39,11 +39,9 @@ public class ApiController {
 
     @PostMapping("/application")
     public applicationResponseTest application(@RequestBody imageRequestDto imageRequestDto){
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] image = decoder.decode(String.valueOf(imageRequestDto));
+
 
         log.info("디코딩 전" + imageRequestDto.getImg_base64());
-        log.info("디코딩 후" + new String(image));
 
         return new applicationResponseTest("잘~ 받았습니다. 당신도 잘 받으셨나요?");
     }
