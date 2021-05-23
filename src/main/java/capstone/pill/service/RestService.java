@@ -50,7 +50,8 @@ public class RestService {
                 .body(imageRequestDto);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
+        ResponseEntity<ApiRequestDto> response = restTemplate.postForEntity(uri, requestDto, ApiRequestDto.class);
+//        ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
         ApiRequestDto responseBody = response.getBody();
 
         // 리턴받은 식별문자로 크롤링
