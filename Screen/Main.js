@@ -8,7 +8,7 @@ global.place=''
 global.p_data = {
   p_image : 'https://www.pharm.or.kr:442/images/sb_photo/big3/A11A1000A022201.jpg',
   p_name : '감기약',
-  p_effort : '감기에 좋음',
+  p_effect : '감기에 좋음',
   p_usage : '식후 30 분 물과 함께 1개 복용',
   p_volume : '60알',
   p_caution : '먹을때 따듯한 물이랑 먹으면 좋으며, 왠만하면 일찍자고 일찍 일어나고 밥을 잘먹는것이 중요합니다. 그래야 면역력이 좋아집니다',

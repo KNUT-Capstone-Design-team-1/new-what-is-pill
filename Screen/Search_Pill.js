@@ -94,13 +94,13 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   photo_st:{
-    height:'40%',
+    height:'50%',
     width:'100%',
-    marginVertical:'2%',
+    marginVertical:'3%',
     resizeMode:'contain',
   },
   description_txt:{
-    height:'40%',
+    height:'30%',
     width:'100%',
     color:'black', 
     fontSize:22, 
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     width:'100%',
     justifyContent:'center', 
     alignItems:'center',
-    marginTop:'-15%',
+    marginTop:'-18%',
     flexDirection:'row',
   },
   btn_st:{

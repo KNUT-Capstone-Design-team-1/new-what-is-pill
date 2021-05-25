@@ -39,7 +39,7 @@ export default function Pill_Information(props){
     <ScrollView>
       <Text style={styles.item_txt_st}>
       {'\n '}이름 : {p_data.p_name}
-      {"\n\n"} 효능 및 효과 {'\n'} : {p_data.p_effort}
+      {"\n\n"} 효능 및 효과 {'\n'} : {p_data.p_effect}
       {"\n\n"} 용법 {'\n'} : {p_data.p_usage}
       {"\n\n"} 용량 {'\n'} : {p_data.p_volume}
       {"\n\n"} 주의사항 {'\n'} : {p_data.p_caution}

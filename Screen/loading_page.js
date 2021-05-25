@@ -19,7 +19,9 @@ async function Send_img(props){
 
     let resp = await response.json()
     console.log('response : ',resp)
+    p_data.p_effect=resp.effect
     p_data.p_usage=resp.dosage
+    p_data.p_caution=resp.caution
 
     navigation.navigate('Pill_Information')
   }catch(e){
