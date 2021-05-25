@@ -7,85 +7,61 @@ import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} 
 export default function Check_Pic(props){
   const {navigation} = props
   return(
-  <SafeAreaView style={{flex:1}}>
-
+  <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.header}>
       <Text style={styles.txt_st}>사진 확인</Text>
     </SafeAreaView>
 
-    <SafeAreaView style={styles.photo_container}>
-      <Image style={styles.photo_st} source={{uri:img_uri}}/>
-    </SafeAreaView>
+    <Image style={styles.photo_st} source={{uri:img_uri}}/>
 
-    <SafeAreaView style={styles.btn_container}>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('loading_page')}>
+      <Text style={styles.txt_st}>검색</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn_st1} onPress={()=>navigation.navigate('loading_page')}>
-        <Text style={styles.txt_st}>검색</Text>
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>Search_Pill.camera(props)}>
+      <Text style={styles.txt_st}>재촬영</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn_st2} onPress={()=>Search_Pill.camera(props)}>
-        <Text style={styles.txt_st}>재촬영</Text>
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>Search_Pill.gallery(props)}>
+      <Text style={styles.txt_st}>갤러리</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn_st2} onPress={()=>Search_Pill.gallery(props)}>
-        <Text style={styles.txt_st}>갤러리</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
-        <Text style={styles.txt_st}>메인화면</Text>
-      </TouchableOpacity>
-
-    </SafeAreaView>
-    
+    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Main')}>
+      <Text style={styles.txt_st}>메인화면</Text>
+    </TouchableOpacity>
   </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'#FDF5E6',
+  },
   header:{
-    flex:0.12,
-    backgroundColor:'#83FFB3',
+    height:'6%',
+    width:'100%',
+    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
-  },
-  photo_container:{
-    flex:1.5,
-    alignItems:'center',
-    margin:'2%',
   },
   photo_st:{
-    height:'70%',
+    height:'65%',
     width:'100%',
     resizeMode:'contain',
-  },
-  btn_container:{
-    flex:0.35,
-    justifyContent:'center',
-    alignItems:'center',
-    marginRight:'2%',
-    marginLeft:'2%',
   },
   txt_st:{
     color:'black',
     fontSize:30,
     fontFamily:'Jua-Regular',
   },
-  btn_st1:{
-    height:'40%',
+  btn_st:{
+    height:'6%',
     width:'100%',
+    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor:'#83FFB3',
+    marginVertical:'1%',
     borderRadius: 5,
-    marginTop:'-40%',
   },
-  btn_st2:{
-    height:'40%',
-    width:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#83FFB3',
-    borderRadius: 5,
-    marginTop:'2%',
-  },
-});
+})

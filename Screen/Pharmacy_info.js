@@ -8,51 +8,43 @@ export default function Pharmacy_info(props){
   const {navigation} = props;
 
   return(
-    <SafeAreaView style={{flex:1}}>
-
+    <SafeAreaView style={styles.container}>
       <SafeAreaView style={styles.header}>
         <Text style={styles.txt_st}>약국 정보</Text>
       </SafeAreaView>
 
-      <WebView style={{flex:1}} source={{uri:pharm_url}} useWebkit={true}/>
+      <WebView style={{height:'100%', width:'100%',}} source={{uri:pharm_url}} useWebkit={true}/>
 
-      <SafeAreaView style={styles.btn_container}>
-
-        <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
-          <Text style={styles.txt_st}>약국 목록</Text>
-        </TouchableOpacity>
-
-      </SafeAreaView>
-      
+      <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
+        <Text style={styles.txt_st}>약국 목록</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
   
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'#FDF5E6',
+  },
   header:{
-    flex:0.07,
-    backgroundColor:'#83FFB3',
+    height:'6%',
+    width:'100%',
+    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center'
   },
-  btn_container:{
-    flex:0.2,
+  btn_st:{
+    height:'7%',
+    width:'100%',
+    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
-    marginRight:'2%',
-    marginLeft:'2%',
+    borderRadius: 5,
   },
   txt_st:{
     color:'black', 
     fontSize:30, 
     fontFamily:'Jua-Regular', 
   },
-  btn_st:{
-    height:'40%',
-    width:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#83FFB3',
-    borderRadius: 5,
-  },
-});
+})

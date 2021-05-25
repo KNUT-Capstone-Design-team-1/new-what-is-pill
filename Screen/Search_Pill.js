@@ -54,92 +54,80 @@ export default function Search_Pill(props){
   const change_image=()=>{set_image(img_uri)}
 
   return(
-  <SafeAreaView style={{flex:1}}>
-
+  <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.header}>
-      <Text style={styles.header_txt}>촬영 가이드 라인</Text>
+      <Text style={styles.txt_st}>촬영 가이드 라인</Text>
     </SafeAreaView>
 
-    <SafeAreaView style={styles.image_container}>
-      <Image style={styles.photo_st} source={{uri:image}}/>
-    </SafeAreaView>
+    <Image style={styles.photo_st} source={{uri:image}}/>
 
-    <SafeAreaView style={styles.text_container}>
-      <Text style={styles.txt_st}>
-      1. 알약의 글자가 나오게 찍어주세요</Text>
-      <Text style={styles.txt_st}>
-      2. 하나의 알약만 찍어주세요</Text>
-      <Text style={styles.txt_st}>
-      3. 글자가 잘 보이도록 가까이서 찍어주세요</Text>
-      <Text style={styles.txt_st}>
-      4. 손바닥과 알약이 잘 구분되게 찍어주세요</Text>
-    </SafeAreaView>
+    <Text style={styles.description_txt}>
+    {'\n '}1. 알약의 글자가 나오게 찍어주세요{'\n\n '}
+    2. 하나의 알약만 찍어주세요{'\n\n '}
+    3. 글자가 잘 보이도록 가까이서 찍어주세요{'\n\n '}
+    4. 손바닥과 알약이 잘 구분되게 찍어주세요
+    </Text>
 
     <SafeAreaView style={styles.btn_container}>
-
       <TouchableOpacity style={styles.btn_st} onPress={()=>camera(props)}>
-        <Text style={styles.header_txt}>카메라</Text>
+        <Text style={styles.txt_st}>카메라</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.btn_st} onPress={()=>gallery(props)}>
-        <Text style={styles.header_txt}>갤러리</Text>
+        <Text style={styles.txt_st}>갤러리</Text>
       </TouchableOpacity>
-
     </SafeAreaView>
-
   </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'#FDF5E6',
+  },
   header:{
-    flex:0.25,
-    backgroundColor:'#83FFB3',
+    height:'6%',
+    width:'100%',
+    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
   },
-  header_txt:{
+  photo_st:{
+    height:'40%',
+    width:'100%',
+    marginVertical:'2%',
+    resizeMode:'contain',
+  },
+  description_txt:{
+    height:'40%',
+    width:'100%',
+    color:'black', 
+    fontSize:22, 
+    fontFamily:'Jua-Regular',
+    borderWidth:2,
+    borderRadius:8,
+  },
+  btn_container:{
+    height:'30%',
+    width:'100%',
+    justifyContent:'center', 
+    alignItems:'center',
+    marginTop:'-15%',
+    flexDirection:'row',
+  },
+  btn_st:{
+    height:'20%',
+    width:'45%',
+    backgroundColor:'#DFD880',
+    margin:'2%',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems:'center',
+  },
+  txt_st:{
     color:'black', 
     fontSize:30, 
     fontFamily:'Jua-Regular', 
   },
-  image_container:{
-    flex:1.7,
-    justifyContent:'center',
-    alignItems:'center',
-    marginTop:"8%",
-  },
-  photo_st:{
-    height:'120%',
-    width:'100%',
-    resizeMode:'contain',
-  },
-  text_container:{
-    flex:1,
-    paddingTop:'7%',
-    marginTop:'7%',
-  },
-  txt_st:{
-    color:'black', 
-    fontSize:22, 
-    fontFamily:'Jua-Regular', 
-    marginLeft:'3%', 
-    marginBottom:'3%',
-  },
-  btn_container:{
-    flex:0.8,
-    justifyContent:'center', 
-    alignItems:'center',
-    flexDirection:'row',
-  },
-  btn_st:{
-    height: '30%',
-    width: '45%',
-    backgroundColor:'#83FFB3',
-    margin: '3%',
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:"-15%",
-  },
-});
+})

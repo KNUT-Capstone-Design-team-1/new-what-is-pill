@@ -12,54 +12,54 @@ export default function Manage_Pill(props){
   state={
     pills:[
       {key:'0', data:'각성제'},
+      {key:'0', data:'각성제'},
+      {key:'0', data:'각성제'},
+      {key:'0', data:'각성제'},
+      {key:'0', data:'각성제'},
     ],
   }
 
   const {navigation} = props;
   const render_list = ({item}) => (
-
   <SafeAreaView style={styles.List_container}>
-
     <TouchableOpacity style={styles.List_st} onPress={()=>alert(`${item.data} 입니다`)}>
       <Text style={styles.txt_st}>{item.key}: {item.data}</Text>
     </TouchableOpacity>
-
   </SafeAreaView>
   )
 
   return(
-  <SafeAreaView style={{flex:1}}>
-
+  <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.header}>
       <Text style={styles.txt_st}>알약 관리</Text>
     </SafeAreaView>
 
-    <FlatList style={styles.FlatList_st} data={state.pills} renderItem={render_list}/>
+    <FlatList data={state.pills} renderItem={render_list}/>
 
-    <SafeAreaView style={styles.btn_container}>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
+      <Text style={styles.txt_st}>주변 약국 검색</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn_st1} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
-        <Text style={styles.txt_st}>주변 약국 검색</Text>
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>Delete_pill(props)}>
+      <Text style={styles.txt_st}>삭제</Text>
+    </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn_st1} onPress={()=>Delete_pill(props)}>
-        <Text style={styles.txt_st}>삭제</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.btn_st2} onPress={()=>navigation.navigate('Main')}>
-        <Text style={styles.txt_st}>메인화면</Text>
-      </TouchableOpacity>
-
-    </SafeAreaView>
-
+    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Main')}>
+      <Text style={styles.txt_st}>메인화면</Text>
+    </TouchableOpacity>
   </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1, 
+    backgroundColor:'#FDF5E6',
+  },
   header:{
-    flex:0.08,
-    backgroundColor:'#83FFB3',
+    height:'6%',
+    width:'100%',
+    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
   },
@@ -67,47 +67,26 @@ const styles = StyleSheet.create({
     flex:1,
     margin:'1.5%',
   },
-  btn_container:{
-    flex:0.3,
+  List_st:{
+    height:'100%',
+    width:'100%',
     justifyContent:'center',
     alignItems:'center',
-    marginRight:'2%',
-    marginLeft:'2%', 
+    borderWidth:1,
+    borderRadius:8,
+  },
+  btn_st:{
+    height:'7%',
+    width:'100%',
+    backgroundColor:'#DFD880',
+    justifyContent:'center',
+    alignItems:'center',
+    marginVertical:'1%',
+    borderRadius: 5,
   },
   txt_st:{
     color:'black',
     fontSize:30,
     fontFamily:'Jua-Regular', 
   },
-  List_st:{
-    height:'100%',
-    width:'100%',
-    borderWidth:1,
-    borderRadius:8,
-    alignItems:'center',
-    justifyContent:'center',
-  },
-  FlatList_st:{
-    width:'100%', 
-    height:'5%',
-  },
-  btn_st1:{
-    height:'30%',
-    width:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#83FFB3',
-    borderRadius: 5,
-    marginTop:'2%',
-  },
-  btn_st2:{
-    height:'30%',
-    width:'100%',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#83FFB3',
-    borderRadius: 5,
-    marginTop:'2%',
-    marginBottom:'5%',
-  },
-});
+})

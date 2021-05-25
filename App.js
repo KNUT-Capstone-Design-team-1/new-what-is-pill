@@ -9,7 +9,7 @@ import SplashScreen from 'react-native-splash-screen'
 import Main from './Screen/Main'
 import Check_Pic from './Screen/Check_Pic'
 import Search_Pill from './Screen/Search_Pill'
-import Information_Pill from './Screen/Information_Pill'
+import Pill_Information from './Screen/Pill_Information'
 import Manage_Pill from './Screen/Manage_Pill'
 import Nearby_Pharmacies from './Screen/Nearby_Pharmacies'
 import Pharmacy_info from './Screen/Pharmacy_info'
@@ -44,17 +44,17 @@ export default function App(){
   
   requestPermission()
   return(
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Information_Pill'>
-          <Stack.Screen name='Main' component={Main} options={{headerShown: false}}/>
-          <Stack.Screen name='Check_Pic' component={Check_Pic} options={{headerShown: false}}/>
-          <Stack.Screen name='Search_Pill' component={Search_Pill} options={{headerShown: false}}/>
-          <Stack.Screen name='Information_Pill' component={Information_Pill} options={{headerShown: false}}/>
-          <Stack.Screen name='Manage_Pill' component={Manage_Pill} options={{headerShown: false}}/>
-          <Stack.Screen name='Nearby_Pharmacies' component={Nearby_Pharmacies} options={{headerShown: false}}/>
-          <Stack.Screen name='Pharmacy_info' component={Pharmacy_info} options={{headerShown: false}}/>
-          <Stack.Screen name='loading_page' component={loading_page} options={{headerShown: false}}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Main'>
+        <Stack.Screen name='Main' component={Main} options={{headerShown: false}}/>
+        <Stack.Screen name='Check_Pic' component={Check_Pic} options={{headerShown: false}}/>
+        <Stack.Screen name='Search_Pill' component={Search_Pill} options={{headerShown: false}}/>
+        <Stack.Screen name='Pill_Information' component={Pill_Information} options={{headerShown: false}}/>
+        <Stack.Screen name='Manage_Pill' component={Manage_Pill} options={{headerShown: false}}/>
+        <Stack.Screen name='Nearby_Pharmacies' component={Nearby_Pharmacies} options={{headerShown: false}}/>
+        <Stack.Screen name='Pharmacy_info' component={Pharmacy_info} options={{headerShown: false}}/>
+        <Stack.Screen name='loading_page' component={loading_page} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }

@@ -18,29 +18,33 @@ async function Send_img(props){
       body:JSON.stringify(post_data)})
 
     let resp = await response.json()
-    console.log('response : ',resp.effect)
+    console.log('response : ',resp)
+    p_data.p_usage=resp.dosage
 
-    navigation.navigate('Information_Pill')
+    navigation.navigate('Pill_Information')
   }catch(e){
+    const {navigation} = props
     ToastAndroid.showWithGravity(`에러코드 : ${e}`,ToastAndroid.LONG,ToastAndroid.CENTER)
-    console.log(e)}
+    navigation.navigate('Check_Pic')
+    console.log(e)
+  }
 }
 
 export default function loading_page(props){
-    const {navigation} = props
-    Send_img(props)
-    return(
-        <SafeAreaView style={{flex:1}}>
-            <Image style={styles.photo_st} source={require('../image/loading_screen.png')}/>
-        </SafeAreaView>
-    )
+  const {navigation} = props
+  Send_img(props)
+  return(
+    <SafeAreaView style={{flex:1,}}>
+        <Image style={styles.photo_st} source={require('../image/loading_screen.png')}/>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
-    photo_st:{
-        height:'100%',
-        width:'100%',
-        resizeMode:'contain',
-        flex:1,
-    },
-});
+  photo_st:{
+    height:'100%',
+    width:'100%',
+    resizeMode:'contain',
+    backgroundColor:'white',
+  },
+})
