@@ -6,6 +6,7 @@ import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} 
 
 export default function Check_Pic(props){
   const {navigation} = props
+  
   return(
   <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.header}>
@@ -14,7 +15,7 @@ export default function Check_Pic(props){
 
     <Image style={styles.photo_st} source={{uri:img_uri}}/>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('loading_page')}>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>{navigation.navigate('loading_page'), pill_managing_sw=0}}>
       <Text style={styles.txt_st}>검색</Text>
     </TouchableOpacity>
 

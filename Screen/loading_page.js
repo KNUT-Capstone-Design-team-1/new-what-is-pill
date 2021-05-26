@@ -17,12 +17,8 @@ async function Send_img(props){
       headers:{'Content-Type': 'application/json',},
       body:JSON.stringify(post_data)})
 
-    let resp = await response.json()
-    console.log('response : ',resp)
-    p_data.p_effect=resp.effect
-    p_data.p_usage=resp.dosage
-    p_data.p_caution=resp.caution
-
+    const p_datadummy = await response.json()
+    p_data = p_datadummy.map(item => (item))
     navigation.navigate('Pill_Information')
   }catch(e){
     const {navigation} = props

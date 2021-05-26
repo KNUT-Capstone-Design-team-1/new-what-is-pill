@@ -1,29 +1,28 @@
 import * as React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
+import CheckBox from '@react-native-community/checkbox'
 import {SafeAreaView, TouchableOpacity, Text, StyleSheet, ToastAndroid, FlatList} from 'react-native'
+import DataBase, {get_all_pills, get_sepcific_pills} from './Database'
+global.ref_name = ''
 
-// 저장중인 알약 정보 삭제
-export function Delete_pill(props){
-  ToastAndroid.showWithGravity('삭제중..',ToastAndroid.LONG,ToastAndroid.CENTER)
+async function Look_Pill_Info(props){
+  const {navigation} = props
+  pill_managing_sw=1
+  const ref_info_tmp = await get_sepcific_pills(ref_name)
+  p_data=ref_info_tmp.map(item => (item))
+  navigation.navigate('Pill_Information')
 }
 
 export default function Manage_Pill(props){
-  state={
-    pills:[
-      {key:'0', data:'각성제'},
-      {key:'0', data:'각성제'},
-      {key:'0', data:'각성제'},
-      {key:'0', data:'각성제'},
-      {key:'0', data:'각성제'},
-    ],
-  }
+  const {navigation} = props
+  const stored_pill_list = get_all_pills()
+  const stored_pill_name = stored_pill_list.map((tmp) => ({'name' : tmp.name}))
 
-  const {navigation} = props;
   const render_list = ({item}) => (
   <SafeAreaView style={styles.List_container}>
-    <TouchableOpacity style={styles.List_st} onPress={()=>alert(`${item.data} 입니다`)}>
-      <Text style={styles.txt_st}>{item.key}: {item.data}</Text>
+    <TouchableOpacity style={styles.List_st} onPress={()=>{ ref_name=item.name, Look_Pill_Info(props)}}>
+      <Text style={styles.txt_st}>{item.name}</Text>
     </TouchableOpacity>
   </SafeAreaView>
   )
@@ -34,14 +33,10 @@ export default function Manage_Pill(props){
       <Text style={styles.txt_st}>알약 관리</Text>
     </SafeAreaView>
 
-    <FlatList data={state.pills} renderItem={render_list}/>
+    <FlatList data={stored_pill_name} renderItem={render_list}/>
 
     <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
       <Text style={styles.txt_st}>주변 약국 검색</Text>
-    </TouchableOpacity>
-
-    <TouchableOpacity style={styles.btn_st} onPress={()=>Delete_pill(props)}>
-      <Text style={styles.txt_st}>삭제</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Main')}>

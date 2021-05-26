@@ -41,7 +41,6 @@ async function requestPermission() {
 // 화면 이동을 위한 Stack
 export default function App(){
   useEffect(()=>{setTimeout(() => {SplashScreen.hide()}, 2500)})
-  
   requestPermission()
   return(
     <NavigationContainer>
