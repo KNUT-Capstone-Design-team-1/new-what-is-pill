@@ -4,8 +4,6 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {launchCamera, launchImageLibrary, ImagePicker} from 'react-native-image-picker'
 import {SafeAreaView, TouchableOpacity, Text, StyleSheet, Image, ToastAndroid} from 'react-native'
-global.img_uri = 'https://user-images.githubusercontent.com/33280934/119253999-db40ce00-bbee-11eb-8757-1be2fc2702cb.jpg'
-global.img_base64 = ''
 
 // 카메라 실행
 export function camera(props){
@@ -50,8 +48,6 @@ export function gallery(props){
 }
 
 export default function Search_Pill(props){
-  const [image, set_image] = useState(img_uri)
-  const change_image=()=>{set_image(img_uri)}
 
   return(
   <SafeAreaView style={styles.container}>
@@ -59,7 +55,7 @@ export default function Search_Pill(props){
       <Text style={styles.txt_st}>촬영 가이드 라인</Text>
     </SafeAreaView>
 
-    <Image style={styles.photo_st} source={{uri:image}}/>
+    <Image style={styles.photo_st} source={{uri:img_uri}}/>
 
     <Text style={styles.description_txt}>
     {'\n '}1. 알약의 글자가 나오게 찍어주세요{'\n\n '}

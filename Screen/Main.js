@@ -3,6 +3,8 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import RNLocation from 'react-native-location'
 import { SafeAreaView, TouchableOpacity, Text, Image, StyleSheet} from 'react-native'
+global.img_uri = ''
+global.img_base64 = ''
 global.place=''
 global.p_data=''
 global.pill_managing_sw=0
@@ -42,7 +44,10 @@ export default function Main(props){
   <SafeAreaView style={styles.container}>
     <Image style={styles.logo_st} source={require('../image/wip_logo.png')}/>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>{navigation.navigate('Search_Pill'), pill_managing_sw=0}}>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>{
+      navigation.navigate('Search_Pill')
+      pill_managing_sw=0
+      img_uri='https://user-images.githubusercontent.com/33280934/119253999-db40ce00-bbee-11eb-8757-1be2fc2702cb.jpg'}}>
       <Text style={styles.txt_st}>알약검색</Text>
     </TouchableOpacity>
 
