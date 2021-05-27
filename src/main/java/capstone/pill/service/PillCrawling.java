@@ -4,11 +4,13 @@ import capstone.pill.dto.ApiResponseDto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @Data
 @Builder
@@ -29,9 +31,9 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-//    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
     //리눅스 배포 버전
-    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+//    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
@@ -41,7 +43,7 @@ public class PillCrawling {
         try {
 
             log.info("--------crawl()시작----------------");
-            log.info("하루하루 떨어져가네네에에에");
+            log.info("행방불명인가보오다아");
             // System Property SetUp
             System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
@@ -53,7 +55,6 @@ public class PillCrawling {
             options.addArguments("--headless");
             options.addArguments("--no-sandbox");
             options.addArguments("--disable-dev-shm-usage");
-//            options.addArguments("--remote-debugging-port=9222");
             driver = new ChromeDriver(options);
             log.info("-------driver 인스턴스-------");
 
@@ -66,34 +67,75 @@ public class PillCrawling {
             webElement = driver.findElement(By.id("drug_print_front"));
             // 이 약이름 삽입
             webElement.sendKeys(drug_name);
+
+            //-- 약 이름, 모양, 분할선만 사용한다고 해서 일단 둘게요
+
             // 제형 지정
-            String type = typeone(drug_type);
-            driver.findElement(By.xpath("//*[@id='type_" + type + "']")).click();
+            //String type = typeone(drug_type);
+            //driver.findElement(By.xpath("//*[@id='type_" + type + "']")).click();
+
             // 모양 지정
             String shape = shapeone(drug_shape);
             driver.findElement(By.xpath("//*[@id='shape_" + shape + "']")).click();
+
             // 색상 지정
-            String color = colorone(drug_color);
-            driver.findElement(By.xpath("//*[@id='color_" + color + "']")).click();
+            //String color = colorone(drug_color);
+            //driver.findElement(By.xpath("//*[@id='color_" + color + "']")).click();
+
             // 분할선 지정
             String line = lineone(drug_line);
             driver.findElement(By.xpath("//*[@id='line_" + line + "']")).click();
+
             // 검색클릭
             driver.findElement(By.id("btn_idfysearch")).click();
+
+            //약에 대한 검색결과가 없을경우 처리
+
+            //결과테이블의 요소 갯수 추출
+            String result_count = driver.findElement(By.id("idfy_total_cnt_view")).getText();
+            int count = Integer.parseInt(result_count);
+
+            //결과가 없으면 다음과 같이 출력
+            if(count == 0){
+                System.out.println("약에 대한 검색 결과가 없습니다.");
+            }
+
+            //의약품 클릭
             driver.findElement(By.cssSelector("#idfytotal0 > tbody > tr:nth-child(3) > td.txtL.name")).click();
+
+            //의약품 상세정보 클릭
             driver.findElement(By.cssSelector("#search_identity_result > article:nth-child(3) > div > a.btn05")).click();
 
-            String effect = driver.findElement(By.xpath("//*[@id=\"effect\"]")).getText();
-            String dosage = driver.findElement(By.xpath("//*[@id=\"dosage\"]")).getText();
-            String caution = driver.findElement(By.xpath("//*[@id=\"caution\"]")).getText();
+            //의약품 상세정보가 없을 경우         TestCase(NEGABON-F 약 검색)
+            if(ExpectedConditions.alertIsPresent().apply(driver)==null) {
+
+                String effect = driver.findElement(By.xpath("//*[@id=\"effect\"]")).getText();
+                String dosage = driver.findElement(By.xpath("//*[@id=\"dosage\"]")).getText();
+                String caution = driver.findElement(By.xpath("//*[@id=\"caution\"]")).getText();
+                String drug_name_r = driver.findElement(By.xpath("//*[@id='result_drug_name']")).getText();
+                String drug_img = driver.findElement(By.xpath("//*[@id='idfy_img_small']")).getAttribute("src");
+                String drug_info = driver.findElement(By.xpath("//*[@id='drug_take']")).getText();
+                String drug_Manufacturer = driver.findElement(By.xpath("//*[@id='all_upso_tab']" )).getText();
+                String drug_Additives = driver.findElement(By.xpath("//*[@id='additives']")).getText();
+
+                ApiResponseDto responseDto = new ApiResponseDto();
+                responseDto.setImage(drug_img);
+                responseDto.setName(drug_name_r);
+                responseDto.setEffect(effect);
+                responseDto.setDosage(dosage);
+                responseDto.setCaution(caution);
+                responseDto.setTake(drug_info);
+                responseDto.setMaker(drug_Manufacturer);
+
+                return responseDto;
+            }
+            //상세정보가 없을경우 alert 메세지 추출하여 출력
+            else{
+                Alert error = driver.switchTo().alert();
+                System.out.println(error.getText());
+            }
 
 
-            ApiResponseDto responseDto = new ApiResponseDto();
-            responseDto.setEffect(effect);
-            responseDto.setDosage(dosage);
-            responseDto.setCaution(caution);
-
-            return responseDto;
         } catch (Exception e) {
 
             e.printStackTrace();

@@ -2,6 +2,7 @@ package capstone.pill.controller;
 
 import capstone.pill.dto.ApiRequestDto;
 import capstone.pill.dto.ApiResponseDto;
+import capstone.pill.service.PillCrawling;
 import capstone.pill.service.RestService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,8 +28,8 @@ public class ApiController {
         return "홈 화면";
     }
     @PostMapping("/search")
-    public ApiResponseDto response(@RequestBody ApiRequestDto requestDto){
-        ApiResponseDto res = restService.res(requestDto);
+    public List<ApiResponseDto> response(@RequestBody ApiRequestDto requestDto){
+        List<ApiResponseDto> res = restService.res(requestDto);
 
         return res;
     }
@@ -57,8 +60,8 @@ public class ApiController {
 
 
     @PostMapping("/image")
-    public ApiResponseDto search(@RequestBody imageRequestDto imageRequestDto){
-        ApiResponseDto response = restService.toML(imageRequestDto.getImg_base64());
+    public List<ApiResponseDto> search(@RequestBody imageRequestDto imageRequestDto){
+        ArrayList<ApiResponseDto> response = restService.toML(imageRequestDto.getImg_base64());
 
         return response;
     }
