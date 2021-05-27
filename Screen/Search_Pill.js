@@ -1,5 +1,4 @@
 import * as React from 'react'
-import {useState, useEffect} from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {launchCamera, launchImageLibrary, ImagePicker} from 'react-native-image-picker'
@@ -48,7 +47,6 @@ export function gallery(props){
 }
 
 export default function Search_Pill(props){
-
   return(
   <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.header}>
