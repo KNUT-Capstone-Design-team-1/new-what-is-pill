@@ -12,7 +12,7 @@ global.dummy=[{
   effect : '감기에 좋음',
   dosage : '식후 30 분 물과 함께 1개 복용',
   caution : '먹을때 따듯한 물이랑 먹으면 좋으며, 왠만하면 일찍자고 일찍 일어나고 밥을 잘먹는것이 중요합니다. 그래야 면역력이 좋아집니다',
-  take :'따듯한 물이랑 한 알씩 삼키면 됩니다. 다들 알약먹을줄 알잖아요',
+  take : '따듯한 물이랑 한 알씩 삼키면 됩니다. 다들 알약먹을줄 알잖아요',
   maker : '보령제약',
 }]
 
@@ -42,7 +42,7 @@ export default function Main(props){
   <SafeAreaView style={styles.container}>
     <Image style={styles.logo_st} source={require('../image/wip_logo.png')}/>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>{navigation.navigate('Pill_Information'), pill_managing_sw=0, p_data=dummy}}>
+    <TouchableOpacity style={styles.btn_st} onPress={()=>{navigation.navigate('Search_Pill'), pill_managing_sw=0}}>
       <Text style={styles.txt_st}>알약검색</Text>
     </TouchableOpacity>
 

@@ -19,6 +19,7 @@ async function Send_img(props){
 
     const p_datadummy = await response.json()
     p_data = p_datadummy.map(item => (item))
+    // p_data = dummy
     navigation.navigate('Pill_Information')
   }catch(e){
     const {navigation} = props
