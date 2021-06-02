@@ -1,6 +1,7 @@
 package capstone.pill.service;
 
 import capstone.pill.dto.ApiResponseDto;
+import capstone.pill.exception.CustomException;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -31,10 +32,10 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-//    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
 
     //리눅스 배포 버전
-    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+//    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
@@ -59,11 +60,19 @@ public class PillCrawling {
             driver = new ChromeDriver(options);
             log.info("-------driver 인스턴스-------");
 
-            base_url = "https://www.health.kr/searchIdentity/search.asp";
+//            base_url = "https://www.health.kr/searchIdentity/search.asp";
+            base_url = "https://wasdfzxcvIdentity/search.asp";
 
             log.info("--------base url 시작----------------");
             // get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
-            driver.get(base_url);
+            try {
+                driver.get(base_url);
+            }catch (RuntimeException e){
+//                throw new CustomException("약학정보원 사이트 접속 오류");
+                throw new Exception("약학정보원 사이트 접속 오류");
+            }
+
+
             // iframe 내부에서 id 필드 탐색
             webElement = driver.findElement(By.id("drug_print_front"));
             // 이 약이름 삽입
@@ -98,7 +107,7 @@ public class PillCrawling {
 
             //결과가 없으면 다음과 같이 출력
             if(count == 0){
-                System.out.println("약에 대한 검색 결과가 없습니다.");
+                throw new Exception("검색 결과가 없습니다.");
             }
 
             //의약품 클릭
@@ -133,19 +142,14 @@ public class PillCrawling {
             //상세정보가 없을경우 alert 메세지 추출하여 출력
             else{
                 Alert error = driver.switchTo().alert();
-                System.out.println(error.getText());
+                throw new CustomException(error.getText());
             }
 
-
         } catch (Exception e) {
-
-            e.printStackTrace();
-
+            throw new CustomException(e.getMessage());
         } finally {
             driver.quit();
-//            driver.close();
         }
-        return null;
     }
     public String typeone(String typeone) {
 

@@ -27,6 +27,7 @@ public class ApiController {
     public String home (){
         return "홈 화면";
     }
+
     @PostMapping("/search")
     public List<ApiResponseDto> response(@RequestBody ApiRequestDto requestDto){
         List<ApiResponseDto> res = restService.res(requestDto);

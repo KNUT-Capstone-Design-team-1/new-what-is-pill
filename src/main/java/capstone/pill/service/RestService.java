@@ -3,13 +3,17 @@ package capstone.pill.service;
 import capstone.pill.dto.ApiRequestDto;
 import capstone.pill.dto.ApiResponseDto;
 import capstone.pill.dto.ImageRequestDto;
+import capstone.pill.exception.CustomException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,25 +59,30 @@ public class RestService {
                 .body(imageRequestDto);
 
         RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<ApiRequestDto> response = restTemplate.postForEntity(uri, requestDto, ApiRequestDto.class);
-        ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
-        ApiRequestDto responseBody = response.getBody();
 
-        // 리턴받은 식별문자로 크롤링
-        PillCrawling crawling = PillCrawling.builder()
-                .drug_name(responseBody.getDrug_name())
-                .drug_type(responseBody.getDrug_type())
-                .drug_shape(responseBody.getDrug_shape())
-                .drug_color(responseBody.getDrug_color())
-                .drug_line(responseBody.getDrug_line())
-                .build();
+        try{
+            ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
+            ApiRequestDto responseBody = response.getBody();
 
-        ApiResponseDto result_crawling = crawling.crawl();
-        ArrayList<ApiResponseDto> result = new ArrayList<>();
+            // 리턴받은 식별문자로 크롤링
+            PillCrawling crawling = PillCrawling.builder()
+                    .drug_name(responseBody.getDrug_name())
+                    .drug_type(responseBody.getDrug_type())
+                    .drug_shape(responseBody.getDrug_shape())
+                    .drug_color(responseBody.getDrug_color())
+                    .drug_line(responseBody.getDrug_line())
+                    .build();
 
-        result.add(result_crawling);
+            ApiResponseDto result_crawling = crawling.crawl();
+            ArrayList<ApiResponseDto> result = new ArrayList<>();
 
-        return result;
+            result.add(result_crawling);
+
+            return result;
+        }catch (RuntimeException e){
+            throw new CustomException("인공지능 서버 접속 오류");
+        }
+
 
     }
 }
