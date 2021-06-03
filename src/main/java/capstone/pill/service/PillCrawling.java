@@ -1,5 +1,6 @@
 package capstone.pill.service;
 
+import capstone.pill.dto.ApiResponseBody;
 import capstone.pill.dto.ApiResponseDto;
 import capstone.pill.exception.CustomException;
 import lombok.Builder;
@@ -32,10 +33,10 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+//    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
 
     //리눅스 배포 버전
-//    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
@@ -60,8 +61,8 @@ public class PillCrawling {
             driver = new ChromeDriver(options);
             log.info("-------driver 인스턴스-------");
 
-//            base_url = "https://www.health.kr/searchIdentity/search.asp";
-            base_url = "https://wasdfzxcvIdentity/search.asp";
+            base_url = "https://www.health.kr/searchIdentity/search.asp";
+//            base_url = "https://wasdfzxcvIdentity/search.asp";
 
             log.info("--------base url 시작----------------");
             // get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
@@ -128,14 +129,18 @@ public class PillCrawling {
                 String drug_Manufacturer = driver.findElement(By.xpath("//*[@id='all_upso_tab']" )).getText();
                 String drug_Additives = driver.findElement(By.xpath("//*[@id='additives']")).getText();
 
+                ApiResponseBody apiResponseBody = new ApiResponseBody();
+                apiResponseBody.setImage(drug_img);
+                apiResponseBody.setName(drug_name_r);
+                apiResponseBody.setEffect(effect);
+                apiResponseBody.setDosage(dosage);
+                apiResponseBody.setCaution(caution);
+                apiResponseBody.setTake(drug_info);
+                apiResponseBody.setMaker(drug_Manufacturer);
+
                 ApiResponseDto responseDto = new ApiResponseDto();
-                responseDto.setImage(drug_img);
-                responseDto.setName(drug_name_r);
-                responseDto.setEffect(effect);
-                responseDto.setDosage(dosage);
-                responseDto.setCaution(caution);
-                responseDto.setTake(drug_info);
-                responseDto.setMaker(drug_Manufacturer);
+                responseDto.setResBody(apiResponseBody);
+                responseDto.setStatus("good");
 
                 return responseDto;
             }

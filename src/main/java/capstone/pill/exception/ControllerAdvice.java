@@ -13,12 +13,14 @@ public class ControllerAdvice {
     @ResponseBody
     public ExceptionResponse exceptionHandler(RuntimeException e){
         ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setStatus("bad");
         exceptionResponse.setMessage(e.getMessage());
         return exceptionResponse;
     }
 
     @Data
     static class ExceptionResponse{
+        private String status;
         private String message;
     }
 }
