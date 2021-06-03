@@ -15,21 +15,25 @@ export default function Check_Pic(props){
 
     <Image style={styles.photo_st} source={{uri:img_uri}}/>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>{navigation.navigate('loading_page'), pill_managing_sw=0}}>
-      <Text style={styles.txt_st}>검색</Text>
-    </TouchableOpacity>
+    <SafeAreaView style={styles.btn_container}>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>{navigation.navigate('loading_page'), pill_managing_sw=0}}>
+        <Image style={styles.btn_st} source={require('../image/search.png')}/>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>Search_Pill.camera(props)}>
-      <Text style={styles.txt_st}>재촬영</Text>
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>Search_Pill.camera(props)}>
+        <Image style={styles.btn_st} source={require('../image/recamera.png')}/>
+      </TouchableOpacity>
+    </SafeAreaView>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>Search_Pill.gallery(props)}>
-      <Text style={styles.txt_st}>갤러리</Text>
-    </TouchableOpacity>
+    <SafeAreaView style={styles.btn_container}>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>Search_Pill.gallery(props)}>
+        <Image style={styles.btn_st} source={require('../image/gallery.png')}/>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Main')}>
-      <Text style={styles.txt_st}>메인화면</Text>
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Main')}>
+        <Image style={styles.btn_st} source={require('../image/main.png')}/>
+      </TouchableOpacity>
+    </SafeAreaView>
   </SafeAreaView>
   )
 }
@@ -37,32 +41,41 @@ export default function Check_Pic(props){
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'#FDF5E6',
+    backgroundColor:'#81C147',
   },
   header:{
-    height:'6%',
+    height:'7%',
     width:'100%',
-    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
   },
   photo_st:{
-    height:'65%',
+    height:'73%',
+    width:'100%',
+    resizeMode:'contain',
+  },
+  btn_container:{
+    height:'10%',
+    width:'100%',
+    justifyContent:'center', 
+    alignItems:'center',
+    flexDirection:'row',
+  },
+  opacity_st:{
+    height:'100%',
+    width:'45%',
+    margin:'2%',
+    justifyContent: 'center',
+    alignItems:'center',
+  },
+  btn_st:{
+    height:'100%',
     width:'100%',
     resizeMode:'contain',
   },
   txt_st:{
-    color:'black',
+    color:'white',
     fontSize:30,
     fontFamily:'Jua-Regular',
-  },
-  btn_st:{
-    height:'6%',
-    width:'100%',
-    backgroundColor:'#DFD880',
-    justifyContent:'center',
-    alignItems:'center',
-    marginVertical:'1%',
-    borderRadius: 5,
   },
 })

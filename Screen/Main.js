@@ -33,21 +33,21 @@ export default function Main(props){
 
   return(
   <SafeAreaView style={styles.container}>
-    <Image style={styles.logo_st} source={require('../image/wip_logo.png')}/>
+    <Image style={styles.logo_st} source={require('../image/wip_main_logo.png')}/>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>{
+    <TouchableOpacity style={styles.opacity_st} onPress={()=>{
       navigation.navigate('Search_Pill')
       pill_managing_sw=0
       img_uri='https://user-images.githubusercontent.com/33280934/119253999-db40ce00-bbee-11eb-8757-1be2fc2702cb.jpg'}}>
-      <Text style={styles.txt_st}>알약검색</Text>
+      <Image style={styles.btn_st} source={require('../image/pill_search.png')}/>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
-      <Text style={styles.txt_st}>주변 약국 찾기</Text>
+    <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
+      <Image style={styles.btn_st} source={require('../image/nearby_pharmacy.png')}/>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Manage_Pill')}>
-      <Text style={styles.txt_st}>알약 관리</Text>
+    <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Manage_Pill')}>
+      <Image style={styles.btn_st} source={require('../image/pill_manage.png')}/>
     </TouchableOpacity>
   </SafeAreaView>
   )
@@ -56,28 +56,26 @@ export default function Main(props){
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'#B4E5AF',
+    backgroundColor:'#81C147',
     justifyContent:'center',
     alignItems:'center',
   },
   logo_st:{
-    height:'43%',
-    width:'80%',
-    borderRadius:60,
+    height:'30%',
+    width:'100%',
+    marginTop:'-15%',
     resizeMode:'contain',
   },
-  btn_st:{
-    height:'10%',
-    width:'70%',
-    backgroundColor:'#FDF5E6',
+  opacity_st:{
+    height:'20%',
+    width:'92%',
     justifyContent:'center',
     alignItems:'center',
-    marginTop:'8%',
-    borderRadius:5,
+    marginTop:'2%',
   },
-  txt_st:{
-    color:'black',
-    fontSize:35,
-    fontFamily:'Jua-Regular',
+  btn_st:{
+    height:'100%',
+    width:'100%',
+    margin:'2%',
   },
 })

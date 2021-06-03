@@ -39,31 +39,31 @@ export default function Pill_Information(props){
     <ScrollView>
       <Text style={styles.item_txt_st}>
         {'\n '}이름 : {p_data[0].name}
-        {"\n\n"} 효능 및 효과 {'\n'} : {p_data[0].effect}
-        {"\n\n"} 용법 및 용량 {'\n'} : {p_data[0].dosage}
-        {"\n\n"} 주의사항 {'\n'} : {p_data[0].caution}
-        {"\n\n"} 복약정보 {'\n'} : {p_data[0].take}
-        {"\n\n"} 제조사 {'\n'} : {p_data[0].maker}
+        {"\n\n\n\n"} 효능 및 효과 {'\n'} : {p_data[0].effect}
+        {"\n\n\n\n"} 용법 및 용량 {'\n'} : {p_data[0].dosage}
+        {"\n\n\n\n"} 주의사항 {'\n'} : {p_data[0].caution}
+        {"\n\n\n\n"} 복약정보 {'\n'} : {p_data[0].take}
+        {"\n\n\n\n"} 제조사 {'\n'} : {p_data[0].maker}
       </Text>
     </ScrollView>
 
     <SafeAreaView style={styles.btn_container}>
-      <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
-        <Text style={styles.btn_txt}>주변 약국 찾기</Text>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Nearby_Pharmacies')}>
+        <Image style={styles.btn_st} source={require('../image/nearby_pharmacy_mini.png')}/>
       </TouchableOpacity>
 
       {
         pill_managing_sw===0
-        ? (<TouchableOpacity style={styles.btn_st} onPress={()=>Save_pill(props)}>
-            <Text style={styles.btn_txt}>저장</Text>
+        ? (<TouchableOpacity style={styles.opacity_st} onPress={()=>Save_pill(props)}>
+            <Image style={styles.btn_st} source={require('../image/save.png')}/>
            </TouchableOpacity>)
-        : (<TouchableOpacity style={styles.btn_st} onPress={()=>Delete_pill(props)}>
-            <Text style={styles.btn_txt}>삭제</Text>
+        : (<TouchableOpacity style={styles.opacity_st} onPress={()=>Delete_pill(props)}>
+            <Image style={styles.btn_st} source={require('../image/delete.png')}/>
            </TouchableOpacity>)
       }
 
-      <TouchableOpacity style={styles.btn_st} onPress={()=>navigation.navigate('Main')}>
-        <Text style={styles.btn_txt}>메인화면</Text>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Main')}>
+        <Image style={styles.btn_st} source={require('../image/main_mini.png')}/>
       </TouchableOpacity>
     </SafeAreaView>
   </SafeAreaView>
@@ -73,12 +73,11 @@ export default function Pill_Information(props){
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'#FDF5E6',
+    backgroundColor:'#81C147',
   },
   header:{
     height:'6%',
     width:'100%',
-    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
   },
@@ -88,20 +87,19 @@ const styles = StyleSheet.create({
     resizeMode:'contain',
   },
   btn_container:{
-    height:'10%',
+    height:'8%',
     width:'100%',
     justifyContent:'center',
     alignItems:'center',
     flexDirection:'row',
   },
-  btn_st:{
-    height:'90%',
-    width:'30%',
+  opacity_st:{
+    height:'100%',
+    width:'33%',
     justifyContent:'center',
     alignItems:'center',
-    backgroundColor:'#DFD880',
-    borderRadius: 5,
-    marginHorizontal:'1%',
+    borderWidth:2,
+    borderRadius:8,
   },
   item_txt_st:{
     color:'black', 
@@ -111,13 +109,13 @@ const styles = StyleSheet.create({
     borderWidth:2,
     borderRadius:8,
   },
-  btn_txt:{
-    color:'black', 
-    fontSize:21, 
-    fontFamily:'Jua-Regular', 
+  btn_st:{
+    height:'100%',
+    width:'100%',
+    resizeMode:'contain',
   },
   txt_st:{
-    color:'black', 
+    color:'white', 
     fontSize:30, 
     fontFamily:'Jua-Regular', 
   },

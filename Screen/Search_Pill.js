@@ -57,18 +57,18 @@ export default function Search_Pill(props){
 
     <Text style={styles.description_txt}>
     {'\n '}1. 알약의 글자가 나오게 찍어주세요{'\n\n '}
-    2. 하나의 알약만 찍어주세요{'\n\n '}
-    3. 글자가 잘 보이도록 가까이서 찍어주세요{'\n\n '}
-    4. 손바닥과 알약이 잘 구분되게 찍어주세요
+    2. 글자가 수평으로 보이게 찍어주세요{'\n\n '}
+    3. 하나의 알약만 찍어주세요{'\n\n '}
+    4. 손바닥과 알약이 잘 구분되게 찍어주세요{'\n\n '}
     </Text>
 
     <SafeAreaView style={styles.btn_container}>
-      <TouchableOpacity style={styles.btn_st} onPress={()=>camera(props)}>
-        <Text style={styles.txt_st}>카메라</Text>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>camera(props)}>
+        <Image style={styles.btn_st} source={require('../image/camera.png')}/>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn_st} onPress={()=>gallery(props)}>
-        <Text style={styles.txt_st}>갤러리</Text>
+      <TouchableOpacity style={styles.opacity_st} onPress={()=>gallery(props)}>
+        <Image style={styles.btn_st} source={require('../image/gallery.png')}/>
       </TouchableOpacity>
     </SafeAreaView>
   </SafeAreaView>
@@ -78,19 +78,18 @@ export default function Search_Pill(props){
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'#FDF5E6',
+    backgroundColor:'#81C147',
   },
   header:{
     height:'6%',
     width:'100%',
-    backgroundColor:'#DFD880',
     justifyContent:'center',
     alignItems:'center',
   },
   photo_st:{
     height:'50%',
     width:'100%',
-    marginVertical:'3%',
+    marginVertical:'2%',
     resizeMode:'contain',
   },
   description_txt:{
@@ -107,21 +106,25 @@ const styles = StyleSheet.create({
     width:'100%',
     justifyContent:'center', 
     alignItems:'center',
-    marginTop:'-18%',
+    marginTop:'-15%',
     flexDirection:'row',
   },
-  btn_st:{
-    height:'20%',
+  opacity_st:{
+    height:'25%',
     width:'45%',
-    backgroundColor:'#DFD880',
     margin:'2%',
     borderRadius: 5,
     justifyContent: 'center',
     alignItems:'center',
   },
+  btn_st:{
+    height:'100%',
+    width:'100%',
+    margin:'2%',
+  },
   txt_st:{
-    color:'black', 
-    fontSize:30, 
-    fontFamily:'Jua-Regular', 
+    color:'black',
+    fontSize:30,
+    fontFamily:'Jua-Regular',
   },
 })
