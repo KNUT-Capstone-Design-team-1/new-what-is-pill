@@ -14,6 +14,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Builder
 @Slf4j
@@ -138,8 +141,10 @@ public class PillCrawling {
                 apiResponseBody.setTake(drug_info);
                 apiResponseBody.setMaker(drug_Manufacturer);
 
+                ArrayList arrayList = new ArrayList();
+                arrayList.add(apiResponseBody);
                 ApiResponseDto responseDto = new ApiResponseDto();
-                responseDto.setResBody(apiResponseBody);
+                responseDto.setResBody(arrayList);
                 responseDto.setStatus("good");
 
                 return responseDto;
