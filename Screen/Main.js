@@ -8,15 +8,6 @@ global.img_base64 = ''
 global.place=''
 global.p_data=''
 global.pill_managing_sw=0
-global.dummy=[{
-  image : 'https://www.pharm.or.kr:442/images/sb_photo/big3/A11A1000A022201.jpg',
-  name : '감기약',
-  effect : '감기에 좋음',
-  dosage : '식후 30 분 물과 함께 1개 복용',
-  caution : '먹을때 따듯한 물이랑 먹으면 좋으며, 왠만하면 일찍자고 일찍 일어나고 밥을 잘먹는것이 중요합니다. 그래야 면역력이 좋아집니다',
-  take : '따듯한 물이랑 한 알씩 삼키면 됩니다. 다들 알약먹을줄 알잖아요',
-  maker : '보령제약',
-}]
 
 // 주변 약국 정보를 수집하기 위한 위치정보 최신화 및 카카오맵 API 호출
 async function get_pharm_list(){
