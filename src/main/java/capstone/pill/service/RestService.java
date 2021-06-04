@@ -18,12 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class RestService {
 
     private final PillCrawling pillCrawling;
 
+    // 테스트용 메서드
     @Transactional
     public List<ApiResponseDto> res(ApiRequestDto requestDto){
 
@@ -34,6 +35,8 @@ public class RestService {
         return result;
     }
 
+    // 실제로 사용될 메서드
+    // 인공지능 서버에 데이터 전송 -> 전송받은 약의 데이터로 크롤링 및 DB 저장 -> Json 형태로 애플리케이션에 반환
     @Transactional
     public ArrayList<ApiResponseDto> toML(String image_url) {
 
@@ -45,9 +48,11 @@ public class RestService {
                 .build()
                 .toUri();
 
+        // 이미지 url Json 형태로 변환
         ImageRequestDto imageRequestDto = new ImageRequestDto();
         imageRequestDto.setImg_base64(image_url);
 
+        // 인공지능 서버로 전송하기 위해 리소스 생성
         RequestEntity<ImageRequestDto> requestDto = RequestEntity
                 .post(uri)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -55,18 +60,16 @@ public class RestService {
 
         RestTemplate restTemplate = new RestTemplate();
 
+
+        // 인공지능 서버로 전송 ( 인공지능 서버가 닫혀있으면 CustomException 발생)
         try{
+            // 인공지능 서버로 전송
             ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
             ApiRequestDto responseBody = response.getBody();
 
-            // 리턴받은 식별문자로 크롤링
-//            PillCrawling pillCrawling = new PillCrawling();
-//            ApiResponseDto crawl = pillCrawling.crawl(responseBody);
-
+            // 인공지능 서버로 부터 전송받은 데이터를 크롤링
             ApiResponseDto crawl = pillCrawling.crawl(responseBody);
-
             ArrayList<ApiResponseDto> result = new ArrayList<>();
-
             result.add(crawl);
 
             return result;

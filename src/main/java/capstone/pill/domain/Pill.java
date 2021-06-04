@@ -17,27 +17,19 @@ public class Pill {
     @Column(name = "pill_id")
     private Long id;
 
-    private String drugDiscrimination; // 약 식별문자
-    private String drugType; // 약 제형
-    private String drugShape; // 약 조건 모양
-    private String drugColor; // 약 조건 색상
-    private String drugLine; // 약 조건 분할선
-
-    // 약 이미 url
-    private String drugImage;
-    // 약 이름
-    private String drugName;
-    // 효능.효과
-    private String drugEffect;
-    // 용법,용량
-    private String drugDosage;
-    // 주의사항
+    private String drugDiscrimination;      // 약 식별문자
+    private String drugType;                // 약 제형
+    private String drugShape;               // 약 조건 모양
+    private String drugColor;               // 약 조건 색상
+    private String drugLine;                // 약 조건 분할선
+    private String drugImage;               // 약 이미 url
+    private String drugName;                // 약 이름
+    private String drugEffect;              // 효능, 효과
+    private String drugDosage;              // 용법, 용량
     @Lob
-    private String  drugCaution;
-    // 복약정보
-    private String drugTake;
-    // 제조/수입사
-    private String drugMaker;
+    private String  drugCaution;            // 주의사항
+    private String drugTake;                // 복약정보
+    private String drugMaker;               // 제조, 수입사
 
     @Builder
     public Pill(String drugDiscrimination, String drugType, String drugShape, String drugColor, String drugLine, String drugImage, String drugName, String drugEffect, String drugDosage, String drugCaution, String drugTake, String drugMaker) {
