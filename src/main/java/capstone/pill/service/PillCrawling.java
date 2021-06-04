@@ -1,33 +1,34 @@
 package capstone.pill.service;
 
+import capstone.pill.domain.Pill;
+import capstone.pill.dto.ApiRequestDto;
 import capstone.pill.dto.ApiResponseBody;
 import capstone.pill.dto.ApiResponseDto;
 import capstone.pill.exception.CustomException;
-import lombok.Builder;
-import lombok.Data;
+import capstone.pill.repository.PillRepository;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Builder
+@Getter
 @Slf4j
+@Service
+@Transactional
 public class PillCrawling {
 
-    //약 특징 변수
-    private String drug_name; // 약 식별문자
-    private String drug_type; // 약 제형
-    private String drug_shape; // 약 조건 모양
-    private String drug_color; // 약 조건 색상
-    private String drug_line; // 약 조건 분할선
+
+    @Autowired
+    private PillRepository pillRepository;
 
 
     // WebDriver 에 필요한 멤버변수
@@ -36,16 +37,17 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-//    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
 
     //리눅스 배포 버전
-    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+//    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
 
 
-    public ApiResponseDto crawl() {
+    @Transactional
+    public ApiResponseDto crawl(ApiRequestDto apiRequestDto) {
         try {
 
             log.info("--------crawl()시작----------------");
@@ -64,23 +66,40 @@ public class PillCrawling {
             driver = new ChromeDriver(options);
             log.info("-------driver 인스턴스-------");
 
-            base_url = "https://www.health.kr/searchIdentity/search.asp";
-//            base_url = "https://wasdfzxcvIdentity/search.asp";
+//            base_url = "https://www.health.kr/searchIdentity/search.asp";
+            base_url = "https://wasdfzxcvIdentity/search.asp";
 
             log.info("--------base url 시작----------------");
             // get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
             try {
                 driver.get(base_url);
-            }catch (RuntimeException e){
-//                throw new CustomException("약학정보원 사이트 접속 오류");
-                throw new Exception("약학정보원 사이트 접속 오류");
+            }catch (WebDriverException e){
+                Pill findPill = pillRepository.findPillByDrugDiscriminationAndDrugShapeAndDrugLine(apiRequestDto.getDrug_name(), apiRequestDto.getDrug_shape(), apiRequestDto.getDrug_line());
+                if (findPill == null){
+                    throw new CustomException("약학정보원 접속 오류");
+                }else{
+                    ApiResponseBody apiResponseBody = new ApiResponseBody();
+                    apiResponseBody.setImage(findPill.getDrugImage());
+                    apiResponseBody.setName(findPill.getDrugName());
+                    apiResponseBody.setEffect(findPill.getDrugEffect());
+                    apiResponseBody.setDosage(findPill.getDrugDosage());
+                    apiResponseBody.setCaution(findPill.getDrugCaution());
+                    apiResponseBody.setMaker(findPill.getDrugMaker());
+
+                    ApiResponseDto<ApiResponseBody> apiResponseDto = new ApiResponseDto();
+                    apiResponseDto.setStatus("good");
+                    apiResponseDto.setResBody(apiResponseBody);
+
+                    return apiResponseDto;
+
+                }
             }
 
 
             // iframe 내부에서 id 필드 탐색
             webElement = driver.findElement(By.id("drug_print_front"));
             // 이 약이름 삽입
-            webElement.sendKeys(drug_name);
+            webElement.sendKeys(apiRequestDto.getDrug_name());
 
             //-- 약 이름, 모양, 분할선만 사용한다고 해서 일단 둘게요
 
@@ -89,7 +108,7 @@ public class PillCrawling {
             //driver.findElement(By.xpath("//*[@id='type_" + type + "']")).click();
 
             // 모양 지정
-            String shape = shapeone(drug_shape);
+            String shape = shapeone(apiRequestDto.getDrug_shape());
             driver.findElement(By.xpath("//*[@id='shape_" + shape + "']")).click();
 
             // 색상 지정
@@ -97,7 +116,7 @@ public class PillCrawling {
             //driver.findElement(By.xpath("//*[@id='color_" + color + "']")).click();
 
             // 분할선 지정
-            String line = lineone(drug_line);
+            String line = lineone(apiRequestDto.getDrug_line());
             driver.findElement(By.xpath("//*[@id='line_" + line + "']")).click();
 
             // 검색클릭
@@ -143,9 +162,28 @@ public class PillCrawling {
 
                 ArrayList arrayList = new ArrayList();
                 arrayList.add(apiResponseBody);
+
                 ApiResponseDto responseDto = new ApiResponseDto();
                 responseDto.setResBody(arrayList);
                 responseDto.setStatus("good");
+
+                // DB에 데이터 저장
+                Pill pIll = Pill.builder()
+                        .drugDiscrimination(apiRequestDto.getDrug_name())
+                        .drugType(apiRequestDto.getDrug_type())
+                        .drugShape(apiRequestDto.getDrug_shape())
+                        .drugColor(apiRequestDto.getDrug_color())
+                        .drugLine(apiRequestDto.getDrug_line())
+                        .drugImage(drug_img)
+                        .drugName(drug_name_r)
+                        .drugEffect(effect)
+                        .drugDosage(dosage)
+                        .drugCaution(caution)
+                        .drugTake(drug_info)
+                        .drugMaker(drug_Manufacturer)
+                        .build();
+
+                pillRepository.save(pIll);
 
                 return responseDto;
             }
@@ -161,25 +199,27 @@ public class PillCrawling {
             driver.quit();
         }
     }
-    public String typeone(String typeone) {
 
-        switch (drug_type) {
-            case "정제": // *[@id="type_01"]
-                return "01";
-            case "경질캡슐": // *[@id="type_02"]
-                return "02";
-            case "연질캡슐": // *[@id="type_03"]
-                return "03";
-            case "기타": // *[@id="type_etc"]
-                return "etc";
-            default: // *[@id="type_all"]
-                return "all";
-        }
-    }
+//    public String typeone(String typeone) {
+//
+//        switch () {
+//            case "정제": // *[@id="type_01"]
+//                return "01";
+//            case "경질캡슐": // *[@id="type_02"]
+//                return "02";
+//            case "연질캡슐": // *[@id="type_03"]
+//                return "03";
+//            case "기타": // *[@id="type_etc"]
+//                return "etc";
+//            default: // *[@id="type_all"]
+//                return "all";
+//        }
+//    }
 
-    public String shapeone(String shapeone) {
 
-        switch (drug_shape) {
+    public String shapeone(String shape) {
+
+        switch (shape) {
             case "원형": // *[@id="shape_01"]
                 return "01";
             case "타원형": // *[@id="shape_02"]
@@ -205,9 +245,9 @@ public class PillCrawling {
         }
     }
 
-    public String colorone(String colorone) {
+    public String colorone(String color) {
 
-        switch (drug_color) {
+        switch (color) {
             case "하양": // *[@id="color_white"]
                 return "white";
             case "노랑": // *[@id="color_yellow"]
@@ -246,9 +286,9 @@ public class PillCrawling {
 
     }
 
-    public String lineone(String lineone) {
+    public String lineone(String line) {
 
-        switch (drug_line) {
+        switch (line) {
             case "없음": // *[@id="line_no"]
                 return "no";
             case "플러스형": // *[@id="line_plus"]
