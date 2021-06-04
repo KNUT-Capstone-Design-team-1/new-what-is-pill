@@ -106,8 +106,6 @@ const styles = StyleSheet.create({
     fontSize:20, 
     fontFamily:'NanumGothicBold',
     padding:'2%',
-    borderWidth:2,
-    borderRadius:8,
   },
   btn_st:{
     height:'100%',
