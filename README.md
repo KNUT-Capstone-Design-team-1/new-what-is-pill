@@ -31,5 +31,5 @@
 
 * DB는 <code>MySQL</code>를 사용해야 합니다.
 * 프로젝트 내 <code>pill\src\main\resources</code> 경로에 <code>application.yml</code> 생성 및 수정.
-<pre><span class="pl-k">spring</span>:
+<pre><span style="color : green">spring</span>:
 </pre>
