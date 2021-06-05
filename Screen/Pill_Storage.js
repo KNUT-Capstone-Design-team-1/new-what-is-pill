@@ -14,7 +14,7 @@ async function Look_Pill_Info(props){
   navigation.navigate('Pill_Information')
 }
 
-export default function Manage_Pill(props){
+export default function Pill_Storage(props){
   const {navigation} = props
   const stored_pill_list = get_all_pills()
   const stored_pill_name = stored_pill_list.map((tmp) => ({'name' : tmp.name}))
@@ -30,7 +30,7 @@ export default function Manage_Pill(props){
   return(
   <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.header}>
-      <Text style={styles.txt_st}>알약 관리</Text>
+      <Text style={styles.header_txt}>알약 보관함</Text>
     </SafeAreaView>
 
     <FlatList data={stored_pill_name} renderItem={render_list}/>
@@ -57,16 +57,22 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
   },
+  header_txt:{
+    color:'white',
+    fontSize:30,
+    fontFamily:'Jua-Regular', 
+  },
   List_container:{
     flex:1,
-    margin:'1.5%',
+    margin:'3%',
+    backgroundColor:'#BDECB6',
+    borderRadius:8,
   },
   List_st:{
     height:'100%',
     width:'100%',
     justifyContent:'center',
     alignItems:'center',
-    borderWidth:1,
     borderRadius:8,
   },
   opacity_st:{
@@ -74,8 +80,6 @@ const styles = StyleSheet.create({
     width:'100%',
     justifyContent:'center',
     alignItems:'center',
-    borderWidth:1,
-    borderRadius:8,
   },
   btn_st:{
     height:'100%',

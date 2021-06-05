@@ -4,7 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import {WebView} from 'react-native-webview'
 import { SafeAreaView, TouchableOpacity, Text, StyleSheet, Image} from 'react-native'
 
-export default function Pharmacy_info(props){
+export default function Pharmacy_Info(props){
   const {navigation} = props;
 
   return(

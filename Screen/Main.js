@@ -46,8 +46,8 @@ export default function Main(props){
       <Image style={styles.btn_st} source={require('../image/nearby_pharmacy.png')}/>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Manage_Pill')}>
-      <Image style={styles.btn_st} source={require('../image/pill_manage.png')}/>
+    <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Pill_Storage')}>
+      <Image style={styles.btn_st} source={require('../image/pill_storage.png')}/>
     </TouchableOpacity>
   </SafeAreaView>
   )

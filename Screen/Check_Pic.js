@@ -15,25 +15,22 @@ export default function Check_Pic(props){
 
     <Image style={styles.photo_st} source={{uri:img_uri}}/>
 
-    <SafeAreaView style={styles.btn_container}>
-      <TouchableOpacity style={styles.opacity_st} onPress={()=>{navigation.navigate('loading_page'), pill_managing_sw=0}}>
-        <Image style={styles.btn_st} source={require('../image/search.png')}/>
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.btn_layer_1} onPress={()=>{navigation.navigate('Loading_Page'), pill_managing_sw=0}}>
+      <Image style={styles.btn_st} source={require('../image/search.png')}/>
+    </TouchableOpacity>
 
+    <SafeAreaView style={styles.btn_layer_2}>
       <TouchableOpacity style={styles.opacity_st} onPress={()=>Search_Pill.camera(props)}>
         <Image style={styles.btn_st} source={require('../image/recamera.png')}/>
       </TouchableOpacity>
-    </SafeAreaView>
-
-    <SafeAreaView style={styles.btn_container}>
       <TouchableOpacity style={styles.opacity_st} onPress={()=>Search_Pill.gallery(props)}>
         <Image style={styles.btn_st} source={require('../image/gallery.png')}/>
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.opacity_st} onPress={()=>navigation.navigate('Main')}>
-        <Image style={styles.btn_st} source={require('../image/main.png')}/>
-      </TouchableOpacity>
     </SafeAreaView>
+
+    <TouchableOpacity style={styles.btn_layer_3} onPress={()=>navigation.navigate('Main')}>
+      <Image style={styles.btn_st} source={require('../image/main.png')}/>
+    </TouchableOpacity>
   </SafeAreaView>
   )
 }
@@ -50,21 +47,33 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   photo_st:{
-    height:'73%',
+    height:'61%',
     width:'100%',
     resizeMode:'contain',
   },
-  btn_container:{
+  btn_layer_1:{
+    height:'14%',
+    width:'100%',
+    justifyContent:'center', 
+    alignItems:'center',
+  },
+  btn_layer_2:{
     height:'10%',
     width:'100%',
     justifyContent:'center', 
     alignItems:'center',
     flexDirection:'row',
   },
+  btn_layer_3:{
+    height:'9%',
+    width:'100%',
+    justifyContent:'center', 
+    alignItems:'center',
+  },
   opacity_st:{
     height:'100%',
-    width:'45%',
-    margin:'2%',
+    width:'48%',
+    marginLeft:'3%',
     justifyContent: 'center',
     alignItems:'center',
   },

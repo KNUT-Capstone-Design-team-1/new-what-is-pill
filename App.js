@@ -10,10 +10,10 @@ import Main from './Screen/Main'
 import Check_Pic from './Screen/Check_Pic'
 import Search_Pill from './Screen/Search_Pill'
 import Pill_Information from './Screen/Pill_Information'
-import Manage_Pill from './Screen/Manage_Pill'
+import Pill_Storage from './Screen/Pill_Storage'
 import Nearby_Pharmacies from './Screen/Nearby_Pharmacies'
-import Pharmacy_info from './Screen/Pharmacy_info'
-import loading_page from './Screen/loading_page'
+import Pharmacy_Info from './Screen/Pharmacy_Info'
+import Loading_Page from './Screen/Loading_Page'
 const Stack = createStackNavigator();
 
 // 카메라, 내ㆍ외장 스토리지, GPS 권한 요청
@@ -49,10 +49,10 @@ export default function App(){
         <Stack.Screen name='Check_Pic' component={Check_Pic} options={{headerShown: false}}/>
         <Stack.Screen name='Search_Pill' component={Search_Pill} options={{headerShown: false}}/>
         <Stack.Screen name='Pill_Information' component={Pill_Information} options={{headerShown: false}}/>
-        <Stack.Screen name='Manage_Pill' component={Manage_Pill} options={{headerShown: false}}/>
+        <Stack.Screen name='Pill_Storage' component={Pill_Storage} options={{headerShown: false}}/>
         <Stack.Screen name='Nearby_Pharmacies' component={Nearby_Pharmacies} options={{headerShown: false}}/>
-        <Stack.Screen name='Pharmacy_info' component={Pharmacy_info} options={{headerShown: false}}/>
-        <Stack.Screen name='loading_page' component={loading_page} options={{headerShown: false}}/>
+        <Stack.Screen name='Pharmacy_Info' component={Pharmacy_Info} options={{headerShown: false}}/>
+        <Stack.Screen name='Loading_Page' component={Loading_Page} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

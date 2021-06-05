@@ -50,16 +50,15 @@ export default function Search_Pill(props){
   return(
   <SafeAreaView style={styles.container}>
     <SafeAreaView style={styles.header}>
-      <Text style={styles.txt_st}>촬영 가이드 라인</Text>
+      <Text style={styles.header_txt}>이렇게 찍어주세요</Text>
     </SafeAreaView>
 
     <Image style={styles.photo_st} source={{uri:img_uri}}/>
 
     <Text style={styles.description_txt}>
-    {'\n '}1. 알약의 글자가 나오게 찍어주세요{'\n\n '}
-    2. 글자가 수평으로 보이게 찍어주세요{'\n\n '}
-    3. 하나의 알약만 찍어주세요{'\n\n '}
-    4. 손바닥과 알약이 잘 구분되게 찍어주세요{'\n\n '}
+    {'\n '}ㆍ 알약의 글자가 잘보이게 찍어주세요{'\n\n '}
+    ㆍ 글자가 수평으로 보이게 찍어주세요{'\n\n '}
+    ㆍ 알약은 하나씩 올려서 찍어주세요{'\n\n '}
     </Text>
 
     <SafeAreaView style={styles.btn_container}>
@@ -79,12 +78,18 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     backgroundColor:'#81C147',
+    alignItems:'center',
   },
   header:{
     height:'6%',
     width:'100%',
     justifyContent:'center',
     alignItems:'center',
+  },
+  header_txt:{
+    color:'white',
+    fontSize:30,
+    fontFamily:'Jua-Regular',
   },
   photo_st:{
     height:'50%',
@@ -94,12 +99,14 @@ const styles = StyleSheet.create({
   },
   description_txt:{
     height:'30%',
-    width:'100%',
+    width:'90%',
     color:'black', 
-    fontSize:22, 
-    fontFamily:'Jua-Regular',
+    fontSize:21,
+    fontWeight:'bold', 
+    fontFamily:'NanumSquareEB',
     borderWidth:2,
     borderRadius:8,
+    backgroundColor:'#BDECB6',
   },
   btn_container:{
     height:'30%',
@@ -121,10 +128,5 @@ const styles = StyleSheet.create({
     height:'100%',
     width:'100%',
     margin:'2%',
-  },
-  txt_st:{
-    color:'black',
-    fontSize:30,
-    fontFamily:'Jua-Regular',
   },
 })
