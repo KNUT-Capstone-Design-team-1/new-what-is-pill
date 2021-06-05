@@ -34,7 +34,7 @@ public class PillCrawling {
 //    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
 
     //리눅스 배포 버전
-    public static final String WEB_DRIVER_PATH = "/usr/local/bin/chromedriver";
+    public static final String WEB_DRIVER_PATH = "/home/ubuntu/MainServer/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
@@ -50,9 +50,9 @@ public class PillCrawling {
             // Driver SetUp
             ChromeOptions options = new ChromeOptions();
             options.setCapability("ignoreProtectedModeSettings", true);
-//            options.addArguments("--headless");
-//            options.addArguments("--no-sandbox");
-//            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--headless");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
             driver = new ChromeDriver(options);
 
             base_url = "https://www.health.kr/searchIdentity/search.asp";

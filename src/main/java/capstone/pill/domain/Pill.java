@@ -27,7 +27,7 @@ public class Pill {
     private String drugEffect;              // 효능, 효과
     private String drugDosage;              // 용법, 용량
     @Lob
-    private String  drugCaution;            // 주의사항
+    private String drugCaution;            // 주의사항
     private String drugTake;                // 복약정보
     private String drugMaker;               // 제조, 수입사
 
