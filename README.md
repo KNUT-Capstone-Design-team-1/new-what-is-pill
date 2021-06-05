@@ -31,5 +31,58 @@
 
 * DB는 <code>MySQL</code>를 사용해야 합니다.
 * 프로젝트 내 <code>pill\src\main\resources</code> 경로에 <code>application.yml</code> 생성 및 수정.
-<pre><span style="color : green">spring</span>:
+<pre>
+<span>spring</span>:
+  <span>datasource</span>:
+    <span>url</span>: jdbc:mysql://{보인의 DB 서버 주소}:{port번호}/{database}?serverTimezone=UTC&characterEncoding=UTF-8
+    <span>username</span>: {DB 아이디}
+    <span>password</span>: {DB 비밀번호}
+    <span>driver-class-name</span>: com.mysql.cj.jdbc.Driver 
+
+  <span>jpa</span>:
+    <span>open-in-view</span>: false
+    <span>database-platform</span>: org.hibernate.dialect.MySQL8Dialect
+    <span>hibernate</span>:
+      <span>ddl-auto</span>: none
+    <span>properties</span>:
+      <span>hibernate</span>:
+        <span>show_sql</span>: true
+        <span>format_sql</span>: true
 </pre>
+* <code>IntelliJ IDEA</code>에서 해당 프로젝트를 Open
+  * <pre>./gradlew build</pre>
+
+## Dependencies
+  * <code>Spring DATA JPA</code>
+
+  * <code>Spring WEB</code>
+  
+  * <code>MySQL Driver</code>
+
+  * <code>Lombok</code>
+
+  * <code>Java Selenium</code>
+
+## 도메인 명세
+
+|Columns|Data Type|
+|------|--------|
+|pill_id|bigint AI PK|
+|drug_caution|longtext|
+|drug_color|varchar(255)|
+|durg_discrimination|varchar(255)|
+|drug_dosage|varchar(255)|
+|drug_effect|varchar(255)|
+|drug_image|varchar(255)|
+|drug_line|varchar(255)|
+|drug_maker|varchar(255)|
+|drug_name|varchar(255)|
+|drug_shape|varchar(255)|
+|drug_take|varchar(255)|
+|drug_type|varchar(255)|
+
+## API 명세
+
+|Method|URI|Description|
+|------|--------|---------|
+|POST|/image|애플리케이션에서 이미 전송|
