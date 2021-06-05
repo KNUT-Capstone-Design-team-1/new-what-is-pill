@@ -17,10 +17,19 @@
 |Build Tool|Gradle 6.8.3|
 
 ## 실행 방법
-* 준비사항.
+* 준비사항
   * <code>Gradle</code> or <code>IntelliJ IDEA</code>
+  
   * <code>JDK</code> (11)
+  
   * <code>Spring Boot</code> (>=2.x)
-  * <code>chromedriver</code> (본인 크롬 버전에 맞게)
+  
+  *  <code>chromedriver</code> (본인 크롬 버전에 맞게)
+  
 * 저장소 <code>clone</code>
-*   
+  * <pre>$ git clone https://github.com/KNUT-Capstone-Design-team-1/SearchServer.git</pre>
+
+* DB는 <code>MySQL</code>를 사용해야 합니다.
+* 프로젝트 내 <code>pill\src\main\resources</code> 경로에 <code>application.yml</code> 생성 및 수정.
+<pre><span class="pl-k">spring</span>:
+</pre>
