@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     resizeMode:'contain',
   },
   txt_st:{
-    color:'black', 
+    color:'white', 
     fontSize:30, 
     fontFamily:'Jua-Regular', 
   },
