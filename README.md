@@ -34,7 +34,7 @@
 <pre>
 <span>spring</span>:
   <span>datasource</span>:
-    <span>url</span>: jdbc:mysql://{보인의 DB 서버 주소}:{port번호}/{database}?serverTimezone=UTC&characterEncoding=UTF-8
+    <span>url</span>: jdbc:mysql://{본인의 DB 서버 주소}:{port번호}/{database}?serverTimezone=UTC&characterEncoding=UTF-8
     <span>username</span>: {DB 아이디}
     <span>password</span>: {DB 비밀번호}
     <span>driver-class-name</span>: com.mysql.cj.jdbc.Driver 
