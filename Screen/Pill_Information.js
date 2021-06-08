@@ -53,7 +53,7 @@ export default function Pill_Information(props){
       </TouchableOpacity>
 
       {
-        pill_managing_sw===1
+        pill_managing_sw===0
         ? (<TouchableOpacity style={styles.opacity_st} onPress={()=>Save_pill(props)}>
             <Image style={styles.btn_st} source={require('../image/save.png')}/>
            </TouchableOpacity>)

@@ -12,7 +12,7 @@ async function Send_img(props){
     const post_data = {'img_base64' : img_base64}
 
     // 메인 서버로 REST를 통해 POST로 전송 및 전송 성공 여부 확인
-    let response = await fetch('http://3.37.82.154:8080/image',{
+    let response = await fetch('http://54.180.97.234:8080/image',{
       method:'POST',
       headers:{'Content-Type': 'application/json',},
       body:JSON.stringify(post_data)})
