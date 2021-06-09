@@ -24,8 +24,9 @@ async function Send_img(props){
       navigation.navigate('Pill_Information')
     }
     else if (p_datadummy[0].status=='bad'){
+      const {navigation} = props
       ToastAndroid.showWithGravity(`${p_datadummy[0].message}`,ToastAndroid.SHORT,ToastAndroid.CENTER)
-      navigation.navigate('Pill_Information')
+      navigation.navigate('Check_Pic')
     }
   }catch(e){
     const {navigation} = props

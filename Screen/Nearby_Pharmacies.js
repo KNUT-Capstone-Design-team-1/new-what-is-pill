@@ -10,7 +10,7 @@ export default function Nearby_Pharmacies(props){
     <SafeAreaView style={styles.flat_st}>
       <TouchableOpacity style={styles.list_st} onPress={()=>{
       pharm_url=item.url, navigation.navigate('Pharmacy_Info')}}>
-      <Text style={styles.txt_st}>{item.name}</Text>
+      <Text style={styles.pharm_name}>{item.name}</Text>
       </TouchableOpacity>
     </SafeAreaView>
   )
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     resizeMode:'contain',
   },
   txt_st:{
-    color:'black', 
+    color:'white', 
     fontSize:30, 
     fontFamily:'Jua-Regular',
   },

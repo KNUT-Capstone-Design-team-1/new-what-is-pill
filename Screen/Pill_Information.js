@@ -2,16 +2,22 @@ import * as React from 'react'
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {SafeAreaView, TouchableOpacity, Text, StyleSheet, ToastAndroid, FlatList, Image, ScrollView} from 'react-native'
-import DataBase, {get_all_pills, add_pill, delete_pill, delete_all} from './Database'
+import DataBase, {get_all_pills, add_pill, delete_pill, delete_all, get_sepcific_pills} from './Database'
 
 // 알약 정보 저장
 function Save_pill(props){
-  add_pill(
+  const In_DB = get_sepcific_pills(p_data[0].name)
+  if (In_DB.toString() == ""){
+    add_pill(
     p_data[0].image, p_data[0].name, p_data[0].effect, p_data[0].dosage,
     p_data[0].caution, p_data[0].take, p_data[0].maker,
-  )
-  ToastAndroid.showWithGravity('저장완료', ToastAndroid.LONG, ToastAndroid.CENTER)
-  const aa = get_all_pills()
+    )
+    ToastAndroid.showWithGravity('저장완료', ToastAndroid.LONG, ToastAndroid.CENTER)
+    const aa = get_all_pills()
+  }
+  else {
+    ToastAndroid.showWithGravity('중복저장', ToastAndroid.LONG, ToastAndroid.CENTER)
+  }
 }
 
 // 알약 정보 삭제
@@ -19,7 +25,7 @@ function Delete_pill(props){
   const {navigation} = props
   delete_pill(p_data[0].name)
   ToastAndroid.showWithGravity('삭제완료', ToastAndroid.SHORT, ToastAndroid.CENTER)
-  navigation.replace('Manage_Pill')
+  navigation.replace('Pill_Storage')
 }
 
 // 알약 정보 데이터 베이스 초기화
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#81C147',
   },
   header:{
-    height:'6%',
+    height:'5%',
     width:'100%',
     justifyContent:'center',
     alignItems:'center',
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
   },
   txt_st:{
     color:'white', 
-    fontSize:30, 
+    fontSize:35, 
     fontFamily:'Jua-Regular', 
   },
 })

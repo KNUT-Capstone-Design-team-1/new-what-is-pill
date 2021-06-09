@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor:'#81C147',
   },
   header:{
-    height:'7%',
+    height:'6%',
     width:'100%',
     justifyContent:'center',
     alignItems:'center',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   txt_st:{
     color:'white',
-    fontSize:30,
+    fontSize:35,
     fontFamily:'Jua-Regular',
   },
 })
