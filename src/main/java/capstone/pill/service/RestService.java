@@ -5,6 +5,7 @@ import capstone.pill.dto.ApiResponseDto;
 import capstone.pill.dto.ImageRequestDto;
 import capstone.pill.exception.CustomException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class RestService {
 
     private final PillCrawling pillCrawling;
@@ -42,7 +44,7 @@ public class RestService {
 
         // 이미지 전송 후 식별문자 리턴 받기
         URI uri = UriComponentsBuilder
-                .fromUriString("http://13.125.225.24:5000")
+                .fromUriString("http://54.180.97.234:5000")
                 .path("/data")
                 .encode()
                 .build()
@@ -62,10 +64,14 @@ public class RestService {
 
 
         // 인공지능 서버로 전송 ( 인공지능 서버가 닫혀있으면 CustomException 발생)
+
         try{
-            // 인공지능 서버로 전송
+            log.info("인공지능 서버 접속 시도");
+             // 인공지능 서버로 전송
             ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
             ApiRequestDto responseBody = response.getBody();
+            log.info("인공지능 서버 접속 성공");
+
 
             // 인공지능 서버로 부터 전송받은 데이터를 크롤링
             ApiResponseDto crawl = pillCrawling.crawl(responseBody);
@@ -74,6 +80,7 @@ public class RestService {
 
             return result;
         }catch (RuntimeException e){
+            log.info("인공지능 서버 접속 오류");
             throw new CustomException("인공지능 서버 접속 오류");
         }
 

@@ -33,10 +33,10 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-//    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
 
     //리눅스 배포 버전
-    public static final String WEB_DRIVER_PATH = "/home/ubuntu/MainServer/chromedriver";
+//    public static final String WEB_DRIVER_PATH = "/home/ubuntu/MainServer/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
@@ -112,16 +112,16 @@ public class PillCrawling {
             webElement.sendKeys(apiRequestDto.getDrug_name());
 
             // 제형 지정
-            //String type = typeone(drug_type);
-            //driver.findElement(By.xpath("//*[@id='type_" + type + "']")).click();
+            String type = typeone(apiRequestDto.getDrug_type());
+            driver.findElement(By.xpath("//*[@id='type_" + type + "']")).click();
 
             // 모양 지정
             String shape = shapeone(apiRequestDto.getDrug_shape());
             driver.findElement(By.xpath("//*[@id='shape_" + shape + "']")).click();
 
             // 색상 지정
-            //String color = colorone(drug_color);
-            //driver.findElement(By.xpath("//*[@id='color_" + color + "']")).click();
+            String color = colorone(apiRequestDto.getDrug_color());
+            driver.findElement(By.xpath("//*[@id='color_" + color + "']")).click();
 
             // 분할선 지정
             String line = lineone(apiRequestDto.getDrug_line());
