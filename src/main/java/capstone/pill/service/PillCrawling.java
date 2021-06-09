@@ -8,6 +8,7 @@ import capstone.pill.exception.CustomException;
 import capstone.pill.repository.PillRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class PillCrawling {
 
     private final PillRepository pillRepository;
@@ -44,6 +46,12 @@ public class PillCrawling {
     public ApiResponseDto crawl(ApiRequestDto apiRequestDto) {
         try {
 
+            log.info("drug_type:" + apiRequestDto.getDrug_type());
+            log.info("drug_line:" + apiRequestDto.getDrug_line());
+            log.info("drug_color:" + apiRequestDto.getDrug_color());
+            log.info("drug_name:" + apiRequestDto.getDrug_name());
+            log.info("drug_shape:" + apiRequestDto.getDrug_shape());
+
             // System Property SetUp
             System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
@@ -61,18 +69,23 @@ public class PillCrawling {
             // DB에 데이터 SELECT -> NULL ? ExceptionError : Return
             try {
                 // 약학 정보원 접속 시도
+                log.info("약학정보원 접속 시도");
                 driver.get(base_url);
+                log.info("약학정보원 접속 성공");
 
             // 접속이 되지 않는다.
             }catch (WebDriverException e){
+                log.info("사이트 접속 실패 후 DB 접근");
                 // DB 에서 SELECT 하는 메서드
                 Pill findPill = findPill(apiRequestDto.getDrug_name(), apiRequestDto.getDrug_shape(), apiRequestDto.getDrug_line());
                 // SELECT 결과가 NULL 이라면
                 if (findPill == null){
                     // ExceptionError
+                    log.info("사이트 접속 실패 후 DB 접근 -> 데이터 없음");
                     throw new CustomException("약학정보원 접속 오류");
                 // 찾는 결과가 있다면 검색된 데이터를 반환
                 }else{
+                    log.info("약학정보원 접속 실패 후 DB 접근 -> 데이터 있음");
                     ApiResponseBody apiResponseBody = new ApiResponseBody();
                     apiResponseBody.setImage(findPill.getDrugImage());
                     apiResponseBody.setName(findPill.getDrugName());
@@ -123,6 +136,7 @@ public class PillCrawling {
 
             //결과가 없으면 다음과 같이 출력
             if(count == 0){
+                log.info("검색 결과가 없음");
                 throw new Exception("검색 결과가 없습니다.");
             }
 
@@ -135,6 +149,7 @@ public class PillCrawling {
             //의약품 상세정보가 없다고 Alert 창이 뜨지 않을 경우         TestCase(NEGABON-F)
             if(ExpectedConditions.alertIsPresent().apply(driver)==null) {
 
+                log.info("약의 정보 추출");
                 // 약의 정보 추출
                 String effect = driver.findElement(By.xpath("//*[@id=\"effect\"]")).getText();
                 String dosage = driver.findElement(By.xpath("//*[@id=\"dosage\"]")).getText();
@@ -145,6 +160,7 @@ public class PillCrawling {
                 String drug_Manufacturer = driver.findElement(By.xpath("//*[@id='all_upso_tab']" )).getText();
                 String drug_Additives = driver.findElement(By.xpath("//*[@id='additives']")).getText();
 
+                log.info("리턴하기 위해 데이터 매핑");
                 // 애플리케이션에 Json 형태로 보내주기 위해 데이터 삽입
                ApiResponseBody apiResponseBody = new ApiResponseBody();
                apiResponseBody.setImage(drug_img);
@@ -163,7 +179,8 @@ public class PillCrawling {
                 responseDto.setStatus("good");
 
                 // 크롤링한 결과가 DB 에 없음? INSERT : PASS
-                if (findPill(apiRequestDto.getDrug_name(), apiRequestDto.getDrug_shape(), apiRequestDto.getDrug_line()) == null) {
+                log.info("크롤링 후 데이터 DB 에서 찾는데 없다면 데이터 저장");
+               if (findPill(apiRequestDto.getDrug_name(), apiRequestDto.getDrug_shape(), apiRequestDto.getDrug_line()) == null) {
                     // DB에 데이터 저장
                     Pill pIll = Pill.builder()
                             .drugDiscrimination(apiRequestDto.getDrug_name())
@@ -188,6 +205,7 @@ public class PillCrawling {
 
             //상세정보가 없을경우 Alert 메세지 추출하여 출력 후 ExceptionError
             else{
+                log.info("상세정보가 없을 경우에 뜨는 Alert 창 크롤링");
                 Alert error = driver.switchTo().alert();
                 throw new CustomException(error.getText());
             }
@@ -195,6 +213,7 @@ public class PillCrawling {
         } catch (Exception e) {
             throw new CustomException(e.getMessage());
         } finally {
+            log.info("셀레니움 종료");
             driver.quit();
         }
     }
