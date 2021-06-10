@@ -96,6 +96,11 @@ public class PillCrawling {
             // 모양 지정
             String shape = shapeone(apiRequestDto.getDrug_shape());
             driver.findElement(By.xpath("//*[@id='shape_" + shape + "']")).click();
+            if (shape.equals("02")){
+                driver.findElement(By.xpath("//*[@id='shape_07']")).click();
+            }else if (shape.equals("07")){
+                driver.findElement(By.xpath("//*[@id='shape_02']")).click();
+            }
 
             // 색상 지정
             String color = colorone(apiRequestDto.getDrug_color());
@@ -141,6 +146,7 @@ public class PillCrawling {
                 String drug_Additives = driver.findElement(By.xpath("//*[@id='additives']")).getText();
 
                 log.info("리턴하기 위해 데이터 매핑");
+
                 // 애플리케이션에 Json 형태로 보내주기 위해 데이터 삽입
                 ApiResponseBody apiResponseBody = new ApiResponseBody();
                 apiResponseBody.setImage(drug_img);
@@ -192,6 +198,7 @@ public class PillCrawling {
             }
 
         } else {
+
             ApiResponseBody apiResponseBody = new ApiResponseBody();
             apiResponseBody.setImage(findPill.getDrugImage());
             apiResponseBody.setName(findPill.getDrugName());
@@ -200,9 +207,12 @@ public class PillCrawling {
             apiResponseBody.setCaution(findPill.getDrugCaution());
             apiResponseBody.setMaker(findPill.getDrugMaker());
 
-            ApiResponseDto<ApiResponseBody> apiResponseDto = new ApiResponseDto();
+            ArrayList arrayList = new ArrayList();
+            arrayList.add(apiResponseBody);
+
+            ApiResponseDto apiResponseDto = new ApiResponseDto();
             apiResponseDto.setStatus("good");
-            apiResponseDto.setResBody(apiResponseBody);
+            apiResponseDto.setResBody(arrayList);
 
             return apiResponseDto;
         }
