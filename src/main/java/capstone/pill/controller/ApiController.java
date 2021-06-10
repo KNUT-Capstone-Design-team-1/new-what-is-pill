@@ -23,7 +23,7 @@ public class ApiController {
 
     // 테스트용 메서드(인공지능 서버에 전송하지 않고 크롤링한다)
     @PostMapping("/search")
-    public List<ApiResponseDto> response(@RequestBody ApiRequestDto requestDto){
+    public List<ApiResponseDto> response(@RequestBody ApiRequestDto requestDto) throws Exception {
         List<ApiResponseDto> res = restService.res(requestDto);
 
         return res;
@@ -31,7 +31,7 @@ public class ApiController {
 
     // 실제로 사용 될 메서드
     @PostMapping("/image")
-    public List<ApiResponseDto> search(@RequestBody imageRequestDto imageRequestDto){
+    public List<ApiResponseDto> search(@RequestBody imageRequestDto imageRequestDto) throws Exception {
         ArrayList<ApiResponseDto> response = restService.toML(imageRequestDto.getImg_base64());
 
         return response;

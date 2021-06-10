@@ -28,8 +28,11 @@ public class RestService {
 
     // 테스트용 메서드
     @Transactional
-    public List<ApiResponseDto> res(ApiRequestDto requestDto){
+    public List<ApiResponseDto> res(ApiRequestDto requestDto) throws Exception {
 
+        if (requestDto.getDrug_name().equals("") || requestDto.getDrug_shape().equals("")){
+            throw new CustomException("사진을 인식할 수 없습니다.");
+        }
         ApiResponseDto crawlResult = pillCrawling.crawl(requestDto);
         List<ApiResponseDto> result = new ArrayList<>();
 
@@ -40,7 +43,7 @@ public class RestService {
     // 실제로 사용될 메서드
     // 인공지능 서버에 데이터 전송 -> 전송받은 약의 데이터로 크롤링 및 DB 저장 -> Json 형태로 애플리케이션에 반환
     @Transactional
-    public ArrayList<ApiResponseDto> toML(String image_url) {
+    public ArrayList<ApiResponseDto> toML(String image_url) throws Exception {
 
         // 이미지 전송 후 식별문자 리턴 받기
         URI uri = UriComponentsBuilder
@@ -63,26 +66,22 @@ public class RestService {
         RestTemplate restTemplate = new RestTemplate();
 
 
-        // 인공지능 서버로 전송 ( 인공지능 서버가 닫혀있으면 CustomException 발생)
+        log.info("인공지능 서버 접속 시도");
+        // 인공지능 서버로 전송
+        ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
+        ApiRequestDto responseBody = response.getBody();
+        log.info("인공지능 서버 접속 성공");
 
-        try{
-            log.info("인공지능 서버 접속 시도");
-             // 인공지능 서버로 전송
-            ResponseEntity<ApiRequestDto> response = restTemplate.exchange(requestDto, ApiRequestDto.class);
-            ApiRequestDto responseBody = response.getBody();
-            log.info("인공지능 서버 접속 성공");
-
-
-            // 인공지능 서버로 부터 전송받은 데이터를 크롤링
-            ApiResponseDto crawl = pillCrawling.crawl(responseBody);
-            ArrayList<ApiResponseDto> result = new ArrayList<>();
-            result.add(crawl);
-
-            return result;
-        }catch (RuntimeException e){
-            log.info("인공지능 서버 접속 오류");
-            throw new CustomException("인공지능 서버 접속 오류");
+        if (responseBody.getDrug_name().equals("") || responseBody.getDrug_shape().equals("")){
+            throw new CustomException("사진을 인식할 수 없습니다.");
         }
+
+        // 인공지능 서버로 부터 전송받은 데이터를 크롤링
+        ApiResponseDto crawl = pillCrawling.crawl(responseBody);
+        ArrayList<ApiResponseDto> result = new ArrayList<>();
+        result.add(crawl);
+
+        return result;
 
 
     }

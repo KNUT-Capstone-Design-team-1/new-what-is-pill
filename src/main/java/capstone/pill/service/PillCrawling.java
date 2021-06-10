@@ -33,25 +33,29 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+//    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
 
     //리눅스 배포 버전
-//    public static final String WEB_DRIVER_PATH = "/home/ubuntu/MainServer/chromedriver";
+    public static final String WEB_DRIVER_PATH = "/home/ubuntu/MainServer/chromedriver";
 
     // 크롤링 할 URL
     private String base_url;
 
 
     @Transactional
-    public ApiResponseDto crawl(ApiRequestDto apiRequestDto) {
-        try {
+    public ApiResponseDto crawl(ApiRequestDto apiRequestDto) throws Exception {
 
-            log.info("drug_type:" + apiRequestDto.getDrug_type());
-            log.info("drug_line:" + apiRequestDto.getDrug_line());
-            log.info("drug_color:" + apiRequestDto.getDrug_color());
-            log.info("drug_name:" + apiRequestDto.getDrug_name());
-            log.info("drug_shape:" + apiRequestDto.getDrug_shape());
+        log.info("drug_type:" + apiRequestDto.getDrug_type());
+        log.info("drug_line:" + apiRequestDto.getDrug_line());
+        log.info("drug_color:" + apiRequestDto.getDrug_color());
+        log.info("drug_name:" + apiRequestDto.getDrug_name());
+        log.info("drug_shape:" + apiRequestDto.getDrug_shape());
 
+        // DB 에서 추출된 약의 정보를 이용해 해당되는 약을 찾는다.
+        Pill findPill = findPill(apiRequestDto.getDrug_name(), apiRequestDto.getDrug_shape());
+
+        // 만약 DB 에 해당 약이 없다면 셀레니움을 이용해 약학정보원에서 약의 정보를 입력하고 결과를 크롤링해 DB에 넣는다.
+        if (findPill == null) {
             // System Property SetUp
             System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
@@ -64,47 +68,21 @@ public class PillCrawling {
             driver = new ChromeDriver(options);
 
             base_url = "https://www.health.kr/searchIdentity/search.asp";
+//        base_url = "https://ww123e123earch.asp";
 
-            // 약학정보원 접속 시도 -> 접속 ? 크롤링 : DB 에서 SELECT
-            // DB에 데이터 SELECT -> NULL ? ExceptionError : Return
+            // 약학정보원에 접속을 시도하고 접속이 되지 않는다면 ExceptionError 로 처리한다.
             try {
                 // 약학 정보원 접속 시도
                 log.info("약학정보원 접속 시도");
                 driver.get(base_url);
                 log.info("약학정보원 접속 성공");
 
-            // 접속이 되지 않는다.
-            }catch (WebDriverException e){
-                log.info("사이트 접속 실패 후 DB 접근");
-                // DB 에서 SELECT 하는 메서드
-                Pill findPill = findPill(apiRequestDto.getDrug_name(), apiRequestDto.getDrug_shape(), apiRequestDto.getDrug_line());
-                // SELECT 결과가 NULL 이라면
-                if (findPill == null){
-                    // ExceptionError
-                    log.info("사이트 접속 실패 후 DB 접근 -> 데이터 없음");
-                    throw new CustomException("약학정보원 접속 오류");
-                // 찾는 결과가 있다면 검색된 데이터를 반환
-                }else{
-                    log.info("약학정보원 접속 실패 후 DB 접근 -> 데이터 있음");
-                    ApiResponseBody apiResponseBody = new ApiResponseBody();
-                    apiResponseBody.setImage(findPill.getDrugImage());
-                    apiResponseBody.setName(findPill.getDrugName());
-                    apiResponseBody.setEffect(findPill.getDrugEffect());
-                    apiResponseBody.setDosage(findPill.getDrugDosage());
-                    apiResponseBody.setCaution(findPill.getDrugCaution());
-                    apiResponseBody.setMaker(findPill.getDrugMaker());
-
-                    ApiResponseDto<ApiResponseBody> apiResponseDto = new ApiResponseDto();
-                    apiResponseDto.setStatus("good");
-                    apiResponseDto.setResBody(apiResponseBody);
-
-                    return apiResponseDto;
-
-                }
+                // 접속이 되지 않는다.
+            } catch (WebDriverException e) {
+                throw new CustomException("해당 약을 찾을 수 없습니다.");
             }
 
-
-//        ------------------크롤링 시작--------------------       //
+            //        ------------------크롤링 시작--------------------
             // iframe 내부에서 id 필드 탐색
             webElement = driver.findElement(By.id("drug_print_front"));
 
@@ -135,10 +113,12 @@ public class PillCrawling {
             int count = Integer.parseInt(result_count);
 
             //결과가 없으면 다음과 같이 출력
-            if(count == 0){
-                log.info("검색 결과가 없음");
-                throw new Exception("검색 결과가 없습니다.");
+            if (count == 0) {
+                log.info("약학정보원 접속은 가능하지만 검색 결과가 없음");
+                throw new CustomException("해당 약을 찾을 수 없습니다.");
             }
+
+            // ---- 검색 결과가 존재 ----
 
             //의약품 클릭
             driver.findElement(By.cssSelector("#idfytotal0 > tbody > tr:nth-child(3) > td.txtL.name")).click();
@@ -147,7 +127,7 @@ public class PillCrawling {
             driver.findElement(By.cssSelector("#search_identity_result > article:nth-child(3) > div > a.btn05")).click();
 
             //의약품 상세정보가 없다고 Alert 창이 뜨지 않을 경우         TestCase(NEGABON-F)
-            if(ExpectedConditions.alertIsPresent().apply(driver)==null) {
+            if (ExpectedConditions.alertIsPresent().apply(driver) == null) {
 
                 log.info("약의 정보 추출");
                 // 약의 정보 추출
@@ -157,19 +137,19 @@ public class PillCrawling {
                 String drug_name_r = driver.findElement(By.xpath("//*[@id='result_drug_name']")).getText();
                 String drug_img = driver.findElement(By.xpath("//*[@id='idfy_img_small']")).getAttribute("src");
                 String drug_info = driver.findElement(By.xpath("//*[@id='drug_take']")).getText();
-                String drug_Manufacturer = driver.findElement(By.xpath("//*[@id='all_upso_tab']" )).getText();
+                String drug_Manufacturer = driver.findElement(By.xpath("//*[@id='all_upso_tab']")).getText();
                 String drug_Additives = driver.findElement(By.xpath("//*[@id='additives']")).getText();
 
                 log.info("리턴하기 위해 데이터 매핑");
                 // 애플리케이션에 Json 형태로 보내주기 위해 데이터 삽입
-               ApiResponseBody apiResponseBody = new ApiResponseBody();
-               apiResponseBody.setImage(drug_img);
-               apiResponseBody.setName(drug_name_r);
-               apiResponseBody.setEffect(effect);
-               apiResponseBody.setDosage(dosage);
-               apiResponseBody.setCaution(caution);
-               apiResponseBody.setTake(drug_info);
-               apiResponseBody.setMaker(drug_Manufacturer);
+                ApiResponseBody apiResponseBody = new ApiResponseBody();
+                apiResponseBody.setImage(drug_img);
+                apiResponseBody.setName(drug_name_r);
+                apiResponseBody.setEffect(effect);
+                apiResponseBody.setDosage(dosage);
+                apiResponseBody.setCaution(caution);
+                apiResponseBody.setTake(drug_info);
+                apiResponseBody.setMaker(drug_Manufacturer);
 
                 ArrayList arrayList = new ArrayList();
                 arrayList.add(apiResponseBody);
@@ -178,49 +158,61 @@ public class PillCrawling {
                 responseDto.setResBody(arrayList);
                 responseDto.setStatus("good");
 
-                // 크롤링한 결과가 DB 에 없음? INSERT : PASS
-                log.info("크롤링 후 데이터 DB 에서 찾는데 없다면 데이터 저장");
-               if (findPill(apiRequestDto.getDrug_name(), apiRequestDto.getDrug_shape(), apiRequestDto.getDrug_line()) == null) {
-                    // DB에 데이터 저장
-                    Pill pIll = Pill.builder()
-                            .drugDiscrimination(apiRequestDto.getDrug_name())
-                            .drugType(apiRequestDto.getDrug_type())
-                            .drugShape(apiRequestDto.getDrug_shape())
-                            .drugColor(apiRequestDto.getDrug_color())
-                            .drugLine(apiRequestDto.getDrug_line())
-                            .drugImage(drug_img)
-                            .drugName(drug_name_r)
-                            .drugEffect(effect)
-                            .drugDosage(dosage)
-                            .drugCaution(caution)
-                            .drugTake(drug_info)
-                            .drugMaker(drug_Manufacturer)
-                            .build();
 
-                    pillRepository.save(pIll);
-                }
+                // DB 에는 해당 약의 정보가 없으니 DB에 데이터 저장
+                Pill pIll = Pill.builder()
+                        .drugDiscrimination(apiRequestDto.getDrug_name())
+                        .drugType(apiRequestDto.getDrug_type())
+                        .drugShape(apiRequestDto.getDrug_shape())
+                        .drugColor(apiRequestDto.getDrug_color())
+                        .drugLine(apiRequestDto.getDrug_line())
+                        .drugImage(drug_img)
+                        .drugName(drug_name_r)
+                        .drugEffect(effect)
+                        .drugDosage(dosage)
+                        .drugCaution(caution)
+                        .drugTake(drug_info)
+                        .drugMaker(drug_Manufacturer)
+                        .build();
+
+                pillRepository.save(pIll);
+
+                log.info("셀레니움 종료");
+                driver.quit();
 
                 return responseDto;
-            }
 
+            }
             //상세정보가 없을경우 Alert 메세지 추출하여 출력 후 ExceptionError
-            else{
-                log.info("상세정보가 없을 경우에 뜨는 Alert 창 크롤링");
-                Alert error = driver.switchTo().alert();
-                throw new CustomException(error.getText());
+            else {
+                log.info("상세 정보가 없다.");
+                log.info("셀레니움 종료");
+                driver.quit();
+                throw new CustomException("해당 약의 정보를 찾을 수 없습니다.");
             }
 
-        } catch (Exception e) {
-            throw new CustomException(e.getMessage());
-        } finally {
-            log.info("셀레니움 종료");
-            driver.quit();
+        } else {
+            ApiResponseBody apiResponseBody = new ApiResponseBody();
+            apiResponseBody.setImage(findPill.getDrugImage());
+            apiResponseBody.setName(findPill.getDrugName());
+            apiResponseBody.setEffect(findPill.getDrugEffect());
+            apiResponseBody.setDosage(findPill.getDrugDosage());
+            apiResponseBody.setCaution(findPill.getDrugCaution());
+            apiResponseBody.setMaker(findPill.getDrugMaker());
+
+            ApiResponseDto<ApiResponseBody> apiResponseDto = new ApiResponseDto();
+            apiResponseDto.setStatus("good");
+            apiResponseDto.setResBody(apiResponseBody);
+
+            return apiResponseDto;
         }
+
+
     }
 
     // DB에 데이터 찾기
-    public Pill findPill(String drugName, String drugShape, String drugLine){
-        return pillRepository.findPillByDrugDiscriminationAndDrugShapeAndDrugLine(drugName, drugShape, drugLine);
+    public Pill findPill(String drugName, String drugShape) {
+        return pillRepository.findPillByDrugDiscriminationAndDrugShape(drugName, drugShape);
     }
 
     // 제형
@@ -239,7 +231,6 @@ public class PillCrawling {
                 return "all";
         }
     }
-
 
 
     // 모양
