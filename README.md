@@ -3,14 +3,14 @@
 ----
 <br/>
 
-### 1. 애플리케이션 개발 환경
+## 1. 애플리케이션 개발 환경
 ----
 >![image](https://user-images.githubusercontent.com/33280934/121773366-79083700-cbb6-11eb-9245-200026b4b761.png)
 
 <br/><br/>
 
 
-### 2. 사용한 라이브러리 다운로드
+## 2. 사용한 라이브러리 다운로드
 ----
 #### 앱 화면 이동<br/>
 npm install react-native-gesture-handler<br/>
@@ -35,13 +35,13 @@ npm install express-generator<br/>
 npm install realm<br/>
 <br/>
 
-### 3. Emulator Execute
+## 3. Emulator Execute
 ----
 #### react-native run-android
 #### ※ Android Studio 4.0 이상 버전 필요 (혹은 스마트폰 연결 후 에뮬레이터로 활용)
 <br/>
 
-### 4. APK File Release
+## 4. APK File Release
 ----
 #### cd android
 #### ./gradlew clean
