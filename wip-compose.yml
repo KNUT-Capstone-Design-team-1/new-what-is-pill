@@ -14,8 +14,6 @@ services:
   image: mysql:8.0.2
   volumes:
    - /home/wip-dev/data:/var/lib/mysql
-  expose: 
-    - 3306/tcp
   environment:
    - TZ=Asia/Seoul
   env_file:
