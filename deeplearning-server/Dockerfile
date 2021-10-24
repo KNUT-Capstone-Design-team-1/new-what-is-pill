@@ -2,7 +2,7 @@ FROM python:3.8.1
 COPY . /usr/src/wip
 WORKDIR /usr/src/wip
 
-RUN mkdir weights \
+RUN mkdir /usr/src/wip/weights \
     && wget https://docs.google.com/uc?export=download&id=1Jk4eGD7crsqCCg9C9VjCLkMN3ze8kutZ -P=/usr/src/wip/weights \
     && wget https://docs.google.com/uc?export=download&id=1pBHtpsecIVQptD3HoWt61gwBIgO2uHCR -P=/usr/src/wip/weights \ 
     && wget https://docs.google.com/uc?export=download&id=1yLixadZ_3Ls4x_TR0-8MG6-iQSEn5ZSG -P=/usr/src/wip/weights \ 
