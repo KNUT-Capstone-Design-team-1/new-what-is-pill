@@ -9,7 +9,7 @@ services:
    - TZ=Asia/Seoul
   ports:
    - 18080:8080
-
+ 
  db:
   image: mysql:8.0.2
   volumes:
@@ -18,8 +18,6 @@ services:
    - TZ=Asia/Seoul
    - MYSQL_ROOT_PASSWORD=wip-1997
    - MYSQL_DATABASE=find_pill
-  env_file:
-   - ./wip-env.env
 
  dl:
   image: 2mukee/wip-dl-deploy
