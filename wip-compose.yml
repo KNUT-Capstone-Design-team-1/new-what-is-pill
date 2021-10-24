@@ -10,7 +10,7 @@ services:
   ports:
    - 18080:8080
 
- db:
+ wip_db:
   image: mysql:8.0.2
   volumes:
    - /home/wip-dev/data:/var/lib/mysql
