@@ -1,6 +1,13 @@
 version: '3.8'
 
 services:
+ db:
+  image: mysql:8.0.2
+  volumes:
+   - /home/wip-dev/data:/var/lib/mysql
+  env_file:
+   - ./wip-env.env
+
  main:
   image: 2mukee/wip-main
   depends_on:
@@ -9,15 +16,6 @@ services:
    - TZ=Asia/Seoul
   ports:
    - 18080:8080
- 
- db:
-  image: mysql:8.0.2
-  volumes:
-   - /home/wip-dev/data:/var/lib/mysql
-  environment:
-   - TZ=Asia/Seoul
-  env_file:
-   - ./wip-env.env
 
  dl:
   image: 2mukee/wip-dl-deploy
