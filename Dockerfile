@@ -1,2 +1,2 @@
 FROM mysql:8.0.2
-ENV MYSQL_ROOT_PASSWORD=wip1997
+RUN apt-get update -y && apt-get upgrade -y && apt-get install openssh-server vim 
