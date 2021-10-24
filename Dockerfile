@@ -3,4 +3,3 @@ RUN mkdir /etc/ssl/mysql
 RUN apt-get update -y --fix-missing && apt-get -y upgrade && apt-get install -y openssh-server vim 
 VOLUME /home/wip-dev/data:/var/lib/mysql
 VOLUME /home/wip-dev/ssl:/etc/ssl/mysql
-CMD --default-authentication-plugin=mysql_native_password
