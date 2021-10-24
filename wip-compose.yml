@@ -11,8 +11,6 @@ services:
 
  main:
   image: 2mukee/wip-main
-  volumes:
-   - /home/wip-dev/ssl:/etc/ssl/mysql
   depends_on:
    - db
   environment:
