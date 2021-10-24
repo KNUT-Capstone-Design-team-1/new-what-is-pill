@@ -21,8 +21,6 @@ services:
 
  dl:
   image: 2mukee/wip-dl
-  expose:
-   - 5000/tcp
   depends_on:
    - main
   environment:
