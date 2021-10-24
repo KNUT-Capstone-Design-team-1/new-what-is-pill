@@ -16,8 +16,8 @@ services:
    - /home/wip-dev/data:/var/lib/mysql
   environment:
    - TZ=Asia/Seoul
-   - MYSQL_ROOT_PASSWORD=wip-1997
-   - MYSQL_DATABASE=find_pill
+  env_file:
+   - ./wip-env.env
 
  dl:
   image: 2mukee/wip-dl-deploy

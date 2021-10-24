@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://${DB_HOST:db}:3306/find_pill?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
-    password: wip-1997
+    password: wip1997
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
