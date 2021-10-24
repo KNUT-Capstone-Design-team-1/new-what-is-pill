@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
  main:
-  image: 2mukee/wip-main
+  image: 2mukee/wip-main-deploy
   depends_on:
    - db
   environment:
@@ -20,7 +20,7 @@ services:
    - ./wip-env.env
 
  dl:
-  image: 2mukee/wip-dl
+  image: 2mukee/wip-dl-deploy
   depends_on:
    - main
   environment:

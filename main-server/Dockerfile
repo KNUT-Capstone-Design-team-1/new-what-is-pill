@@ -3,4 +3,4 @@ COPY . /usr/src/wip
 WORKDIR /usr/src/wip
 WORKDIR /usr/src/wip/build/libs
 RUN javac -d pill-0.0.1-SNAPSHOT.jar
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "java", "pill-0.0.1-SNAPSHOT.jar" ]
