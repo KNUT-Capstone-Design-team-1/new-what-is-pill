@@ -1,6 +1,6 @@
-FROM openjdk:11
+FROM 2mukee/wip-main
 COPY . /usr/src/wip
 WORKDIR /usr/src/wip
-RUN bash ./gradlew build -x test
 WORKDIR /usr/src/wip/build/libs
+RUN javac -d pill-0.0.1-SNAPSHOT.jar
 ENTRYPOINT [ "java", "pill-0.0.1-SNAPSHOT.jar" ]
