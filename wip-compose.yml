@@ -10,7 +10,7 @@ services:
    - ./wip-env.env
 
  main:
-  image: 2mukee/wip-main
+  image: 2mukee/wip-main:1.0
   depends_on:
    - db
   environment:
@@ -19,7 +19,7 @@ services:
    - 18080:8080
 
  dl:
-  image: 2mukee/wip-dl-deploy
+  image: 2mukee/wip-dl-deploy:1.0
   depends_on:
    - main
   environment:
