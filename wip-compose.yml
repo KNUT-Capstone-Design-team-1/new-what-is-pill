@@ -10,7 +10,7 @@ services:
    - ./wip-env.env
 
  main:
-  image: 2mukee/wip-main-deploy
+  image: 2mukee/wip-main
   depends_on:
    - db
   environment:
