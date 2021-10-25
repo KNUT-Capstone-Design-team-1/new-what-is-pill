@@ -33,7 +33,7 @@ public class PillCrawling {
 
     // Properties
     public static final String WEB_DRIVER_ID = "webdriver.chrome.driver";
-    public static final String WEB_DRIVER_PATH = "D:/chromedriver.exe";
+    public static final String WEB_DRIVER_PATH = "/usr/src/wip/chromedriver";
 
     //리눅스 배포 버전
 //    public static final String WEB_DRIVER_PATH = "/home/ubuntu/MainServer/chromedriver";
