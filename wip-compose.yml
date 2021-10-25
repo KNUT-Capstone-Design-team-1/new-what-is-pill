@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
  db:
-  image: mysql:8.0.2
+  image: 2mukee/wip-db-deploy:1.0
   volumes:
     - /home/wip-dev/data:/var/lib/mysql
     - /home/wip-dev/ssl:/etc/ssl/mysql
