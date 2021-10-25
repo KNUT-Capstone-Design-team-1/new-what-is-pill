@@ -47,7 +47,7 @@ public class RestService {
 
         // 이미지 전송 후 식별문자 리턴 받기
         URI uri = UriComponentsBuilder
-                .fromUriString("http://54.180.97.234:5000")
+                .fromUriString("http://dl:5000")
                 .path("/data")
                 .encode()
                 .build()
