@@ -1,4 +1,4 @@
-FROM 2mukee/wip-main
+FROM openjdk:11
 COPY . /usr/src/wip
 WORKDIR /usr/src/wip/
 RUN bash ./gradlew build -x test
