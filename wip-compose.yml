@@ -17,6 +17,14 @@ services:
    - TZ=Asia/Seoul
   ports:
    - 18080:8080
+  deploy:
+   mode: replicated
+   replicas: 5
+   update_config:
+    parallelism: 5
+    delay: 10s
+    order: start-first
+    failure_action: rollback
 
  dl:
   image: 2mukee/wip-dl-deploy:1.1
@@ -24,3 +32,11 @@ services:
    - main
   environment:
    - TZ=Asia/Seoul
+  deploy:
+   mode: replicated
+   replicas: 5
+   update_config:
+    parallelism: 5
+    delay: 10s
+    order: start-first
+    failure_action: rollback
