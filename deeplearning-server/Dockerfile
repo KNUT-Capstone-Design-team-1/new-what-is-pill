@@ -1,16 +1,4 @@
-FROM python:3.8.1
+FROM 2mukee/wip-dl:latest
 COPY . /usr/src/wip
-RUN mkdir weights
-WORKDIR /usr/src/wip/weights
-
-RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Jk4eGD7crsqCCg9C9VjCLkMN3ze8kutZ' -O craft_mlt_25k.pth \
-    && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1pBHtpsecIVQptD3HoWt61gwBIgO2uHCR' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1pBHtpsecIVQptD3HoWt61gwBIgO2uHCR" -O fine_tuned.pt && rm -rf /tmp/cookies.txt \
-    && wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1yLixadZ_3Ls4x_TR0-8MG6-iQSEn5ZSG' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1yLixadZ_3Ls4x_TR0-8MG6-iQSEn5ZSG" -O pill_recog_model.pth && rm -rf /tmp/cookies.txt \
-    && apt-get update && apt-get -y install libgl1-mesa-glx \
-    && /usr/local/bin/python -m pip install --upgrade pip \
-    && pip3 install torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html \
-    && pip3 install flask opencv-python scipy scikit-image lmdb natsort efficientnet_pytorch
-
 WORKDIR /usr/src/wip
-RUN python3 model_test.py
 ENTRYPOINT [ "python3", "DL_main.py" ]
