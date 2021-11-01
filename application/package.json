@@ -14,6 +14,7 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
+    "fastlane": "^0.1.0",
     "gradle": "^1.2.4",
     "npm": "^7.12.1",
     "react": "17.0.1",
@@ -28,6 +29,7 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-webview": "^11.4.4",
     "realm": "^10.4.1",
+    "ruby": "^0.6.1",
     "styled-components": "^5.3.0",
     "yarn": "^1.22.10"
   },
