@@ -4,3 +4,4 @@ testimg.py
 *.pt
 *.pyc
 *.pth
+__pycache__/
