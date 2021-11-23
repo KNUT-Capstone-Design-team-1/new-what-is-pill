@@ -60,3 +60,5 @@ buck-out/
 
 # keystore
 .keystore
+
+package-lock.json
