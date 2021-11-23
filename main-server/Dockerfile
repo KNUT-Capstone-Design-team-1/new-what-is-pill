@@ -11,6 +11,8 @@ RUN bash ./gradlew build -x test
 FROM alpine:edge
 COPY --from=builder /usr/src/wip/build/libs/pill-0.0.1-SNAPSHOT.jar /usr/src/wip/main_server.jar
 WORKDIR /usr/src/wip/
+
+# timezone setting and openjdk install
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime \
     && apk add --update openjdk11=11.0.13_p8-r0
 EXPOSE 8080
