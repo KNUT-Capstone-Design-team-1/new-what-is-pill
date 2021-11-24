@@ -14,7 +14,7 @@ RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1
 
 # deeplearning model test and server compile
 WORKDIR /usr/src/wip
-RUN python3 model_test.py && RUN python -m compile -f -b .
+RUN python3 model_test.py && python -m compile -f -b .
 
 
 # deeplearning server container
