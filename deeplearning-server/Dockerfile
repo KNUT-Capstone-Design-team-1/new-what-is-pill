@@ -11,10 +11,11 @@ RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1
     && /usr/local/bin/python -m pip install --upgrade pip \
     && pip3 install torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html \
     && pip3 install flask opencv-python scipy scikit-image lmdb natsort efficientnet_pytorch \
+    && pip3 install compiler
 
 # deeplearning model test and server compile
 WORKDIR /usr/src/wip
-RUN python3 model_test.py
+RUN python3 model_test.py && python3 -m compile -f -b .
 
 
 # deeplearning server container
