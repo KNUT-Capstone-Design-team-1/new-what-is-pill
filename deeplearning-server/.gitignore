@@ -1,7 +1,9 @@
-testimg.py
 *.png
 *.gif
 *.pt
 *.pyc
 *.pth
 __pycache__/
+test_img/
+weight/*
+figures/
