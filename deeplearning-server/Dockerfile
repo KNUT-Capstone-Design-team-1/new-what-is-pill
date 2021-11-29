@@ -2,6 +2,7 @@ FROM python:3.8.1 AS builder
 COPY . /usr/src/wip
 RUN mkdir weights
 WORKDIR /usr/src/wip/weights
+RUN apt-get install -y wget 
 
 # install library for deeplearning server
 RUN wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Jk4eGD7crsqCCg9C9VjCLkMN3ze8kutZ' -O craft_mlt_25k.pth \
@@ -26,7 +27,7 @@ COPY --from=builder /usr/local/lib/python3.8 /usr/local/lib/python3.8
 # server program copy and python 3.8 install
 COPY --from=builder /usr/src/wip/ /usr/src/wip
 WORKDIR /usr/src/wip
-RUN apk add --update python3=3.8.10-r0 && chmod -R +x wip
+RUN apk add --update python3=3.8.10-r0
 
 # execute deeplearning server
 ENTRYPOINT [ "python3", "DL_main.py" ]
