@@ -23,7 +23,7 @@ def detect_pill_shape(img_data):
     model = EfficientNet.from_pretrained(model_name, num_classes=2)
 
     #학습된 모델 불러오기
-    model.load_state_dict(torch.load('weights/pill_shape_fine_tuned.pt', map_location='cpu'))
+    model.load_state_dict(torch.load('./deeplearning_server/weights/pill_shape_fine_tuned.pt', map_location='cpu'))
     model.eval()
 
     try:
