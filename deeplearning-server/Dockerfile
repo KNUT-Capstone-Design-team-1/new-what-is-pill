@@ -1,15 +1,12 @@
 FROM python:3.8.1
 COPY . /usr/src/wip
-RUN mkdir weights
 WORKDIR /usr/src/wip
 
 # install library for deeplearning server
 RUN apt-get update && apt-get -y install libgl1-mesa-glx \
     && /usr/local/bin/python -m pip install --upgrade pip \
-    && pip3 install compiler
-
-# install library for deeplearning server
-RUN pip install -r requirements.txt \
+    && pip3 install compiler \
+    && pip install -r requirements.txt \
     && python3 /usr/src/wip/deeplearning_server/get_dl_model.py
 
 # execute deeplearning server
