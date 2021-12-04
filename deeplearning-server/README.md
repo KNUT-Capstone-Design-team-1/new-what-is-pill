@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# new-what-is-pill
-what is pill application and server
-=======
 # DL Server Flask
 ## Information
 - DL_main.py : flask server file
@@ -75,4 +71,3 @@ make dir weights for trained model
 - Repo of Text-Detection, CRAFT : https://github.com/clovaai/CRAFT-pytorch
 - Repo of Text-Recognition : https://github.com/clovaai/deep-text-recognition-benchmark
 - EfficientNet-Pytorch : https://github.com/lukemelas/EfficientNet-PyTorch
->>>>>>> dl/main
