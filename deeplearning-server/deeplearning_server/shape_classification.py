@@ -1,8 +1,9 @@
-import torchvision.transforms as transforms
-from PIL import Image
 from pill_shape_model.models import ResNet18
+import torchvision.transforms as transforms
 import torch
+
 import numpy as np
+from PIL import Image
 
 
 def transform_image(image_data):
