@@ -14,6 +14,6 @@ WORKDIR /usr/src/wip/
 
 # timezone setting and openjdk install
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime \
-    && apk add --update openjdk11=11.0.13_p8-r0
+    && apk add --update openjdk11=11.0.15_p10-r1
 EXPOSE 8080
 ENTRYPOINT [ "java", "-jar", "/usr/src/wip/main_server.jar" ]
