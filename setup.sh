@@ -1,5 +1,5 @@
 #!/bin/bash
-bash /var/lib/jenkins/workspace/mh-login.sh
+bash /var/lib/jenkins/workspace/login.sh
 docker build --tag 2mukee/wip-main-deploy:latest /var/lib/jenkins/workspace/new-what-is-pill/main-server
 docker build --tag 2mukee/wip-dl /var/lib/jenkins/workspace/new-what-is-pill/deeplearning-server
 docker push 2mukee/wip-main-deploy:latest
