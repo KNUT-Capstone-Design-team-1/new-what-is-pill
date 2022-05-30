@@ -3,7 +3,7 @@ COPY . /usr/src/wip
 WORKDIR /usr/src/wip
 
 # install library for deeplearning server
-RUN apt-get update && apt-get -y install libgl1-mesa-glx \
+RUN apt-get update && apt-get -y install libgl1-mesa-glx libapache2-mod-wsgi \
     && /usr/local/bin/python -m pip install --upgrade pip \
     && pip3 install compiler \
     && pip3 install -r /usr/src/wip/requirements.txt \
