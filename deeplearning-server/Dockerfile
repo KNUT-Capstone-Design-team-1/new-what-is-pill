@@ -7,9 +7,8 @@ RUN apt-get update && apt-get -y install libgl1-mesa-glx \
     && /usr/local/bin/python -m pip install --upgrade pip \
     && pip3 install compiler \
     && pip3 install -r /usr/src/wip/requirements.txt \
+    && pip install flask \
     && python3 /usr/src/wip/deeplearning_server/get_dl_model.py
-
-run pip3 install flask
 
 # execute deeplearning server
 ENTRYPOINT [ "python3", "/usr/src/wip/deeplearning_server/DL_main.py" ]
