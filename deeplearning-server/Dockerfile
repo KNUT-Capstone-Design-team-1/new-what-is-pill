@@ -4,10 +4,11 @@ WORKDIR /usr/src/wip
 USER root
 
 # install library for deeplearning server
-RUN apt-get update && apt-get -y install libgl1-mesa-glx libapache2-mod-wsgi python3-wheel \
+RUN apt-get update && apt-get -y install libgl1-mesa-glx libapache2-mod-wsgi \
     && /usr/local/bin/python -m pip install --upgrade pip \
     && pip3 install compiler \
     && pip3 install -r /usr/src/wip/requirements.txt \
+    && pip3 install --no-cache-dir gdown \
     && python3 /usr/src/wip/deeplearning_server/get_dl_model.py
 
 # execute deeplearning server
